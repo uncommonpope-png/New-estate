@@ -19,7 +19,8 @@ body{background:var(--black);color:var(--text);font-family:'EB Garamond',Georgia
 #world{position:fixed;inset:0;z-index:0;pointer-events:none;}
 #gate{position:fixed;inset:0;z-index:4000;background:#050504;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 1.8s,visibility 1.8s;}
 #gate.gone{opacity:0;visibility:hidden;pointer-events:none;}
-#gate-cv{position:absolute;inset:0;width:100%;height:100%;}
+#gate-space{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;}
+#gate-cv{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;}
 .gate-ui{position:relative;z-index:2;text-align:center;display:flex;flex-direction:column;align-items:center;padding:20px;}
 .g-seal{font-family:'Cinzel',serif;font-size:clamp(38px,9vw,84px);font-weight:700;color:var(--gold);letter-spacing:.16em;animation:up 1.3s ease .5s both;}
 .g-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(12px,2vw,18px);color:var(--muted);letter-spacing:.3em;margin-top:10px;animation:up 1.2s ease .9s both;}
@@ -125,11 +126,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:linear-gradient(t
 .rv.gold{color:var(--gold);font-size:17px;}
 .rv.green{color:#8bc49a;}
 .rv.red{color:#c49090;}
-.brief-explainer{background:rgba(196,169,90,.04);border-left:3px solid var(--gold);padding:20px 24px;margin-bottom:20px;}
-.be-num{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.4em;color:var(--gold);margin-bottom:8px;}
-.be-title{font-family:'Cinzel',serif;font-size:17px;color:var(--text);margin-bottom:10px;}
-.be-body{font-size:16px;line-height:1.7;color:#9e9a92;}
-.be-truth{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:var(--gold);margin-top:10px;}
 #page-arsenal{background:rgba(6,5,3,.88);}
 .arsenal-hero{height:220px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
 #arsenal-cv{position:absolute;inset:0;width:100%;height:100%;}
@@ -199,12 +195,14 @@ footer{position:relative;z-index:1;background:rgba(5,4,3,.96);border-top:1px sol
 </style>
 </head>
 <body>
+
 <canvas id="world"></canvas>
 <div id="ticker">
   <div class="ticker-label">LIVE DOCTRINE</div>
   <div class="ticker-scroll"><div class="ticker-inner" id="ticker-text"></div></div>
 </div>
 <div id="gate">
+  <canvas id="gate-space"></canvas>
   <canvas id="gate-cv"></canvas>
   <div class="gate-ui">
     <div class="g-seal">THE ESTATE</div>
@@ -215,6 +213,7 @@ footer{position:relative;z-index:1;background:rgba(5,4,3,.96);border-top:1px sol
     <a href="https://uncommonpope-png.github.io/plt-press/" target="_blank" style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:.3em;color:var(--gold);margin-top:16px;text-decoration:none;border:1px solid rgba(196,169,90,.4);padding:10px 24px;transition:all .3s;animation:up 1s ease 2.5s both;">VISIT PLT PRESS BOOKSTORE</a>
   </div>
 </div>
+
 <nav>
   <span class="nav-brand" onclick="showPage('home')">THE ESTATE</span>
   <ul class="nav-links">
@@ -228,6 +227,7 @@ footer{position:relative;z-index:1;background:rgba(5,4,3,.96);border-top:1px sol
   </ul>
 </nav>
 
+<!-- HOME -->
 <div id="home" class="page active">
   <section id="home-hero">
     <canvas id="hero-cv"></canvas>
@@ -247,18 +247,17 @@ footer{position:relative;z-index:1;background:rgba(5,4,3,.96);border-top:1px sol
   </section>
   <div class="divider"></div>
   <div class="home-grid">
-    <div class="home-card" onclick="showPage('doctrine')"><div class="hc-num">I</div><div class="hc-title">The Doctrine</div><div class="hc-body">Forty Estates. Seven Books. The complete classified doctrine of the real estate agent who has decided to win.</div></div>
-    <div class="home-card" onclick="showPage('estate')"><div class="hc-num">II</div><div class="hc-title">The Estate</div><div class="hc-body">Read Estates I through V in full. The Laws. The Philosophy. The Cheat Codes. The Mirror.</div></div>
-    <div class="home-card" onclick="showPage('brief')"><div class="hc-num">III</div><div class="hc-title">The Brief</div><div class="hc-body">Seven calculations the industry depends on agents never running. With live tools.</div></div>
-    <div class="home-card" onclick="showPage('arsenal')"><div class="hc-num">IV</div><div class="hc-title">The Arsenal</div><div class="hc-body">Ten live professional calculators. Net per transaction. Referral gap. Runway. Tax savings.</div></div>
-    <div class="home-card" onclick="showPage('vault')"><div class="hc-num">V</div><div class="hc-title">The Vault</div><div class="hc-body">Classified intelligence released weekly. Operational knowledge that produces results immediately.</div></div>
-    <div class="home-card" onclick="showPage('plt')"><div class="hc-num">VI</div><div class="hc-title">PLT Scorer</div><div class="hc-body">Score any professional decision. Profit plus Love minus Tax equals True Value.</div></div>
+    <div class="home-card" onclick="showPage('doctrine')"><div class="hc-num">I</div><div class="hc-title">The Doctrine</div><div class="hc-body">Forty Estates. Seven Books. The complete classified doctrine.</div></div>
+    <div class="home-card" onclick="showPage('estate')"><div class="hc-num">II</div><div class="hc-title">The Estate</div><div class="hc-body">Read Estates I through V in full.</div></div>
+    <div class="home-card" onclick="showPage('brief')"><div class="hc-num">III</div><div class="hc-title">The Brief</div><div class="hc-body">Seven calculations the industry depends on agents never running.</div></div>
+    <div class="home-card" onclick="showPage('arsenal')"><div class="hc-num">IV</div><div class="hc-title">The Arsenal</div><div class="hc-body">Ten live professional calculators.</div></div>
+    <div class="home-card" onclick="showPage('vault')"><div class="hc-num">V</div><div class="hc-title">The Vault</div><div class="hc-body">Classified intelligence released weekly.</div></div>
+    <div class="home-card" onclick="showPage('plt')"><div class="hc-num">VI</div><div class="hc-title">PLT Scorer</div><div class="hc-body">Score any professional decision in real time.</div></div>
   </div>
   <div style="padding:60px 44px;background:rgba(6,5,3,.7);text-align:center;">
     <div class="s-lbl">The Framework</div>
     <div style="font-family:'Cinzel',serif;font-size:clamp(28px,6vw,64px);color:var(--gold);letter-spacing:.06em;margin:20px 0;">PROFIT + LOVE &minus; TAX</div>
     <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(18px,3vw,28px);color:var(--muted);">= True Value</div>
-    <p style="font-size:18px;color:#9e9a92;max-width:600px;margin:28px auto 0;line-height:1.85;">Every professional decision has a score. Most agents never see it running.</p>
   </div>
   <footer>
     <div class="f-brand">THE ESTATE</div>
@@ -276,6 +275,7 @@ footer{position:relative;z-index:1;background:rgba(5,4,3,.96);border-top:1px sol
   </footer>
 </div>
 
+<!-- DOCTRINE -->
 <div id="page-doctrine" class="page">
   <div class="doctrine-hero"><canvas id="doctrine-cv"></canvas>
     <div class="doctrine-hero-text" style="position:relative;z-index:2;text-align:center;">
@@ -286,23 +286,23 @@ footer{position:relative;z-index:1;background:rgba(5,4,3,.96);border-top:1px sol
   <div class="doctrine-feed" id="doctrine-feed"></div>
 </div>
 
+<!-- ESTATE -->
 <div id="page-estate" class="page">
   <div class="estate-full-header"><canvas id="estate-head-cv"></canvas>
     <div style="position:relative;z-index:2;text-align:center;">
       <div class="s-lbl">COMPLETE TEXT</div>
       <div style="font-family:'Cinzel',serif;font-size:clamp(26px,5vw,52px);color:var(--text);">The Estate</div>
-      <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:var(--muted);margin-top:8px;">Estates I through XL</div>
     </div>
   </div>
   <div class="estate-full-content" id="estate-full-content"></div>
   <div style="text-align:center;padding:40px 44px 80px;background:rgba(196,169,90,.04);border-top:1px solid var(--border);">
     <div class="s-lbl">FULL DOCUMENT</div>
-    <div style="font-family:'Cinzel',serif;font-size:22px;color:var(--text);margin-bottom:16px;">Download The Complete Estate</div>
     <a href="THE_ESTATE_FINAL.docx" download class="btn-g">Download The Estate</a>
-    <div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:.3em;color:var(--muted);margin-top:14px;">CLASSIFIED &middot; NUMBERED COPY &middot; DO NOT REDISTRIBUTE</div>
+    <div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:.3em;color:var(--muted);margin-top:14px;">CLASSIFIED &middot; NUMBERED COPY</div>
   </div>
 </div>
 
+<!-- BRIEF -->
 <div id="page-brief" class="page">
   <div class="brief-hero"><canvas id="brief-cv"></canvas>
     <div style="position:relative;z-index:2;text-align:center;">
@@ -311,18 +311,15 @@ footer{position:relative;z-index:1;background:rgba(5,4,3,.96);border-top:1px sol
     </div>
   </div>
   <div class="sec" style="max-width:1100px;">
-    <p class="s-body" style="margin-bottom:48px;">The industry profits from the gap between what you know and what is true about your own business.</p>
-    <div style="margin-bottom:48px;"><div class="be-num">NUMBER 01</div><div class="be-title" style="font-family:'Cinzel',serif;font-size:20px;color:var(--text);margin-bottom:10px;">Your Actual Net Per Transaction</div><div class="be-body">The gross commission is the number the industry shows you. The net per transaction is the number your business actually runs on.</div><div class="be-truth">The $9,200 commission and the $3,800 you actually keep are not the same career.</div></div>
-    <div style="margin-bottom:48px;"><div class="be-num">NUMBER 02</div><div class="be-title" style="font-family:'Cinzel',serif;font-size:20px;color:var(--text);margin-bottom:10px;">The Referral Rate Your Practice Is Capable Of</div><div class="be-body">The documented referral rate of systematically maintained client relationships is 65 percent. The average agent generates 18 to 22 percent.</div><div class="be-truth">The referrals that don't come are invisible. The cost of their absence is not.</div></div>
-    <div style="margin-bottom:48px;"><div class="be-num">NUMBER 03</div><div class="be-title" style="font-family:'Cinzel',serif;font-size:20px;color:var(--text);margin-bottom:10px;">What Your Brokerage Actually Makes From You</div><div class="be-body">The fully-loaded brokerage cost for most agents is 38 to 45 percent of gross commission, not the 25 to 30 percent the split implies.</div><div class="be-truth">The split they quote and the amount you keep are two different numbers.</div></div>
-    <div style="margin-bottom:48px;"><div class="be-num">NUMBER 04</div><div class="be-title" style="font-family:'Cinzel',serif;font-size:20px;color:var(--text);margin-bottom:10px;">The Tax You Are Not Required To Pay</div><div class="be-body">Four decisions save $25,000 to $40,000 annually. Every year. Without earning one additional dollar.</div><div class="be-truth">You have already earned this money. The question is whether you keep it.</div></div>
-    <div style="margin-bottom:48px;"><div class="be-num">NUMBER 05</div><div class="be-title" style="font-family:'Cinzel',serif;font-size:20px;color:var(--text);margin-bottom:10px;">The Full Cost of Your Worst Client This Year</div><div class="be-body">The transaction that produced $9,200 in gross commission frequently produced a net loss of $3,000 to $8,000 in True Value.</div><div class="be-truth">The decline is the most expensive free thing in the business.</div></div>
-    <div style="margin-bottom:48px;"><div class="be-num">NUMBER 06</div><div class="be-title" style="font-family:'Cinzel',serif;font-size:20px;color:var(--text);margin-bottom:10px;">What Your Database Is Actually Worth</div><div class="be-body">The three-year value difference between maintained and unmaintained database: $121,600.</div><div class="be-truth">Your database is an asset. The question is whether you are managing it like one.</div></div>
-    <div style="margin-bottom:48px;"><div class="be-num">NUMBER 07</div><div class="be-title" style="font-family:'Cinzel',serif;font-size:20px;color:var(--text);margin-bottom:10px;">Your Runway - The Number That Determines Everything</div><div class="be-body">The agent with two months of runway and the agent with eight months of runway are not having the same conversations.</div><div class="be-truth">The client reads the runway in the first ninety seconds.</div></div>
-    <div style="text-align:center;padding:40px 0 20px;">
-      <a href="THE_BRIEF.docx" download class="btn-g">Download The Complete Brief</a>
-      <div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:.3em;color:var(--muted);margin-top:14px;">PLT Press &middot; Craig Jones &middot; Classified Distribution</div>
-    </div>
+    <p class="s-body" style="margin-bottom:48px;">The industry profits from the gap between what you know and what is true.</p>
+    <div style="margin-bottom:48px;"><div class="be-num">NUMBER 01</div><div class="be-title" style="font-family:'Cinzel',serif;font-size:20px;color:var(--text);margin-bottom:10px;">Your Actual Net Per Transaction</div><div class="be-truth">The $9,200 commission and the $3,800 you actually keep are not the same career.</div></div>
+    <div style="margin-bottom:48px;"><div class="be-num">NUMBER 02</div><div class="be-title" style="font-family:'Cinzel',serif;font-size:20px;color:var(--text);margin-bottom:10px;">The Referral Rate</div><div class="be-truth">The referrals that don't come are invisible.</div></div>
+    <div style="margin-bottom:48px;"><div class="be-num">NUMBER 03</div><div class="be-title" style="font-family:'Cinzel',serif;font-size:20px;color:var(--text);margin-bottom:10px;">Brokerage Cost</div><div class="be-truth">The split they quote and the amount you keep are two different numbers.</div></div>
+    <div style="margin-bottom:48px;"><div class="be-num">NUMBER 04</div><div class="be-title" style="font-family:'Cinzel',serif;font-size:20px;color:var(--text);margin-bottom:10px;">Tax You Don't Owe</div><div class="be-truth">You have already earned this money.</div></div>
+    <div style="margin-bottom:48px;"><div class="be-num">NUMBER 05</div><div class="be-title" style="font-family:'Cinzel',serif;font-size:20px;color:var(--text);margin-bottom:10px;">Worst Client Cost</div><div class="be-truth">The decline is the most expensive free thing.</div></div>
+    <div style="margin-bottom:48px;"><div class="be-num">NUMBER 06</div><div class="be-title" style="font-family:'Cinzel',serif;font-size:20px;color:var(--text);margin-bottom:10px;">Database Value</div><div class="be-truth">Your database is an asset.</div></div>
+    <div style="margin-bottom:48px;"><div class="be-num">NUMBER 07</div><div class="be-title" style="font-family:'Cinzel',serif;font-size:20px;color:var(--text);margin-bottom:10px;">Runway</div><div class="be-truth">The client reads the runway in ninety seconds.</div></div>
+    <div style="text-align:center;padding:40px 0 20px;"><a href="THE_BRIEF.docx" download class="btn-g">Download The Brief</a></div>
   </div>
   <div class="divider"></div>
   <div class="sec" style="max-width:1100px;padding-top:60px;">
@@ -333,6 +330,7 @@ footer{position:relative;z-index:1;background:rgba(5,4,3,.96);border-top:1px sol
   </div>
 </div>
 
+<!-- ARSENAL -->
 <div id="page-arsenal" class="page">
   <div class="arsenal-hero"><canvas id="arsenal-cv"></canvas>
     <div style="position:relative;z-index:2;text-align:center;">
@@ -345,17 +343,18 @@ footer{position:relative;z-index:1;background:rgba(5,4,3,.96);border-top:1px sol
   </div>
 </div>
 
+<!-- VAULT -->
 <div id="page-vault" class="page">
   <div class="vault-hero"><canvas id="vault-cv"></canvas>
     <div style="position:relative;z-index:2;text-align:center;">
       <div class="s-lbl">CLASSIFIED INTELLIGENCE</div>
       <div style="font-family:'Cinzel',serif;font-size:clamp(26px,5vw,52px);color:var(--text);">The Vault</div>
-      <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:var(--muted);margin-top:8px;">One secret per week. Click any to read in full.</div>
     </div>
   </div>
   <div class="vault-grid" id="vault-grid"></div>
 </div>
 
+<!-- PLT SCORER -->
 <div id="page-plt" class="page">
   <div class="plt-hero"><canvas id="plt-cv"></canvas>
     <div style="position:relative;z-index:2;text-align:center;">
@@ -364,68 +363,75 @@ footer{position:relative;z-index:1;background:rgba(5,4,3,.96);border-top:1px sol
     </div>
   </div>
   <div class="plt-wrap">
-    <p class="s-body" style="margin-bottom:36px;">Every professional decision has a score. Set the sliders to score any situation.</p>
-    <div class="slg ps"><label><span style="color:var(--profit)">PROFIT &mdash; Financial &amp; Business Return</span><span id="pv" style="color:var(--profit)">5</span></label><input type="range" min="0" max="10" value="5" id="sp" oninput="score()"></div>
-    <div class="slg ls"><label><span style="color:var(--love)">LOVE &mdash; Trust, Loyalty &amp; Referral Capital</span><span id="lv" style="color:var(--love)">5</span></label><input type="range" min="-10" max="10" value="5" id="sl" oninput="score()"></div>
-    <div class="slg ts"><label><span style="color:var(--tax)">TAX &mdash; Full Cost (visible &amp; invisible)</span><span id="tv2" style="color:var(--tax)">3</span></label><input type="range" min="0" max="10" value="3" id="st" oninput="score()"></div>
+    <div class="slg ps"><label><span style="color:var(--profit)">PROFIT</span><span id="pv" style="color:var(--profit)">5</span></label><input type="range" min="0" max="10" value="5" id="sp" oninput="score()"></div>
+    <div class="slg ls"><label><span style="color:var(--love)">LOVE</span><span id="lv" style="color:var(--love)">5</span></label><input type="range" min="-10" max="10" value="5" id="sl" oninput="score()"></div>
+    <div class="slg ts"><label><span style="color:var(--tax)">TAX</span><span id="tv2" style="color:var(--tax)">3</span></label><input type="range" min="0" max="10" value="3" id="st" oninput="score()"></div>
     <div class="sdsp">
       <div class="sbox pb"><div class="sbox-lbl">P</div><div class="sbox-val" id="dp">5</div><div class="sbox-nm">Profit</div></div>
       <div class="sbox lb"><div class="sbox-lbl">L</div><div class="sbox-val" id="dl">5</div><div class="sbox-nm">Love</div></div>
       <div class="sbox tb2"><div class="sbox-lbl">T</div><div class="sbox-val" id="dt">3</div><div class="sbox-nm">Tax</div></div>
     </div>
     <div class="tv-bar"><div class="tv-eq">P + L &minus; T = TRUE VALUE</div><div class="tv-val" id="tvv">7</div></div>
-    <div class="s-read" id="sr">Adjust the sliders to score any professional decision.</div>
+    <div class="s-read" id="sr">Adjust the sliders.</div>
     <div class="plt-guide" style="margin-top:48px;">
-      <div class="pg-card"><div class="pg-letter" style="color:var(--profit)">P</div><div class="pg-name" style="color:var(--profit)">PROFIT</div><div class="pg-body">The financial and business return produced by a decision. Scored 0 to 10.</div></div>
-      <div class="pg-card"><div class="pg-letter" style="color:var(--love)">L</div><div class="pg-name" style="color:var(--love)">LOVE</div><div class="pg-body">The relational, reputational, and trust capital produced. Scored -10 to 10.</div></div>
-      <div class="pg-card"><div class="pg-letter" style="color:var(--tax)">T</div><div class="pg-name" style="color:var(--tax)">TAX</div><div class="pg-body">The total cost of a decision - financial, cognitive, emotional, and reputational. Scored 0 to 10.</div></div>
+      <div class="pg-card"><div class="pg-letter" style="color:var(--profit)">P</div><div class="pg-name" style="color:var(--profit)">PROFIT</div><div class="pg-body">Financial return. Scored 0 to 10.</div></div>
+      <div class="pg-card"><div class="pg-letter" style="color:var(--love)">L</div><div class="pg-name" style="color:var(--love)">LOVE</div><div class="pg-body">Trust and referral capital. Scored -10 to 10.</div></div>
+      <div class="pg-card"><div class="pg-letter" style="color:var(--tax)">T</div><div class="pg-name" style="color:var(--tax)">TAX</div><div class="pg-body">Total cost visible and invisible. Scored 0 to 10.</div></div>
     </div>
     <div style="margin-top:48px;">
       <div class="s-lbl">SCENARIO LIBRARY</div>
-      <h3 style="font-family:'Cinzel',serif;font-size:20px;color:var(--text);margin-bottom:8px;">Click to load any scenario</h3>
       <div class="g-rule"></div>
       <div class="scenario-list" id="scenario-list"></div>
     </div>
   </div>
 </div>
-
 <script>
 function openGate(){var g=document.getElementById('gate');if(!g)return;g.style.transition='opacity 1.6s ease';g.style.opacity='0';setTimeout(function(){g.style.display='none';},1600);}
 function showPage(name){document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});document.querySelectorAll('.nav-links a').forEach(function(a){a.classList.remove('active');});var pg=document.getElementById(name==='home'?'home':'page-'+name);if(pg){pg.classList.add('active');window.scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0;setTimeout(function(){window.scrollTo(0,0);document.documentElement.scrollTop=0;observeReveal();},50);}var navMap={'home':'nav-home','doctrine':'nav-doctrine','estate':'nav-estate','brief':'nav-brief','arsenal':'nav-arsenal','vault':'nav-vault','plt':'nav-plt'};var nel=document.getElementById(navMap[name]);if(nel)nel.classList.add('active');}
-var DOCTRINE_TICKER=['The client decides in 90 seconds. The signal is the position.','PROFIT + LOVE - TAX = TRUE VALUE.','The delinquent tax list is public record. Fewer than 5 agents read it.','The reluctant partner is the actual decision.','Your database is worth $121,600 more maintained than unmaintained.','The appraisal package changes the outcome before the appraiser arrives.','$25,000 to $40,000 per year in unnecessary tax.','The surplus is not the reward. It is the precondition.','The voluntary disclosure converts limitation into trust deposit.','The permit pull finds the seller 6 months before they know.'];
-(function(){var wrap=document.querySelector('.ticker-scroll');var el=document.getElementById('ticker-text');if(!wrap||!el)return;var txt=DOCTRINE_TICKER.join('   |   ');el.textContent=txt+'     '+txt;var pos=0;var speed=0.5;setTimeout(function(){var fullW=el.scrollWidth/2;function tick(){pos+=speed;if(pos>=fullW)pos=0;el.style.transform='translateX(-'+pos+'px)';requestAnimationFrame(tick);}tick();},100);})();
-var BROADCAST=[{msg:'The client decides whether you are the agent in the first ninety seconds.',estate:'ESTATE I - THE PRE-DECISION',p:'P +9',l:'L +8',tx:'T -2'},{msg:'PROFIT + LOVE - TAX = TRUE VALUE.',estate:'THE PLT FRAMEWORK',p:'P +10',l:'L +10',tx:'T -1'},{msg:'The delinquent tax list is public record.',estate:'ESTATE III',p:'P +9',l:'L +9',tx:'T -3'},{msg:'Every couple contains one person who has already decided.',estate:'ESTATE V',p:'P +8',l:'L +10',tx:'T -2'}];
+var DOCTRINE_TICKER=['The client decides in 90 seconds. The signal is the position.','PROFIT + LOVE - TAX = TRUE VALUE.','The delinquent tax list is public record. Fewer than 5 agents read it.','The reluctant partner is the actual decision.','Your database is worth $121,600 more maintained.','The appraisal package changes the outcome.','$25,000 to $40,000 per year in unnecessary tax.','The surplus is the precondition.','Voluntary disclosure converts limitation into trust.','The permit pull finds the seller 6 months before.'];
+(function(){var wrap=document.querySelector('.ticker-scroll');var el=document.getElementById('ticker-text');if(!wrap||!el)return;var txt=DOCTRINE_TICKER.join(' | ');el.textContent=txt+'     '+txt;var pos=0;var speed=0.5;setTimeout(function(){var fullW=el.scrollWidth/2;function tick(){pos+=speed;if(pos>=fullW)pos=0;el.style.transform='translateX(-'+pos+'px)';requestAnimationFrame(tick);}tick();},100);})();
+var BROADCAST=[{msg:'The client decides whether you are the agent in the first ninety seconds.',estate:'ESTATE I',p:'P +9',l:'L +8',tx:'T -2'},{msg:'PROFIT + LOVE - TAX = TRUE VALUE. Every professional decision has a score.',estate:'PLT FRAMEWORK',p:'P +10',l:'L +10',tx:'T -1'},{msg:'The delinquent tax list is public record.',estate:'ESTATE III',p:'P +9',l:'L +9',tx:'T -3'},{msg:'Every couple contains one person who has already decided.',estate:'ESTATE V',p:'P +8',l:'L +10',tx:'T -2'}];
 var bcIdx=0;var _bcFirst=true;
 function showBroadcast(i){var d=BROADCAST[i%BROADCAST.length];var msg=document.getElementById('bc-msg');var est=document.getElementById('bc-estate');var plt=document.getElementById('bc-plt');if(!msg)return;function setContent(){msg.textContent=d.msg;if(est)est.textContent=d.estate;if(plt)plt.innerHTML='<span style="color:var(--profit)">'+d.p+'</span>&nbsp;&nbsp;<span style="color:var(--love)">'+d.l+'</span>&nbsp;&nbsp;<span style="color:var(--tax)">'+d.tx+'</span>';}if(_bcFirst){_bcFirst=false;msg.style.opacity='1';setContent();}else{msg.style.transition='opacity 0.6s';msg.style.opacity='0';setTimeout(function(){setContent();msg.style.opacity='1';},620);}}
 function nextBroadcast(){bcIdx=(bcIdx+1)%BROADCAST.length;showBroadcast(bcIdx);setTimeout(nextBroadcast,6500);}
 showBroadcast(bcIdx);setTimeout(nextBroadcast,6500);
-var DOCTRINE_FULL=[{num:'I',title:'The Pre-Decision',law:'Every transaction is decided before the first word of the presentation.',philosophy:['There is a sequence of events that occurs in every first client encounter that the vast majority of agents have never mapped.','The verdict is not about your credentials. It is about one variable: do you need this deal.','The surplus position is not a financial planning objective. It is a professional performance instrument.'],cheat:['Calculate your actual liquid financial runway today.','Run the Zero Consequence Review before any significant listing appointment.','The Abundance Calibration: rehearse genuine indifference.','The Ninety-Second Discipline: genuine presence only.','Maintain the Signal Ledger every Sunday.'],mirror:'What is your exact liquid runway right now?',p:'P +9',l:'L +8',tx:'T -2'},{num:'II',title:'The Tax of Transparency',law:'The voluntary disclosure of a limitation converts it into a trust deposit worth 10x.',philosophy:['Every agent is managing concealments.','The voluntary disclosure generates a Love deposit that dwarfs the cost.','The mathematics are not close.'],cheat:['Run the Transparency Inventory before every new client relationship.','Apply the Disclosure Calculus to each item.','The Disclosure Opening.','The Limitation Disclosure Formula.'],mirror:'Name the specific truth you are most actively managing.',p:'P +7',l:'L +9',tx:'T -2'},{num:'III',title:'The Delinquent Tax List',law:'The pre-distress seller is in the county treasurer\'s records.',philosophy:['The delinquent property tax list is public record.','The agent who contacts the owner is providing genuine professional help.','The response rate: 30 to 45 percent.'],cheat:['Locate the delinquent property tax list for your county today.','Filter the raw list.','Cross-reference every address with the assessor records.','Contact approach: handwritten note on plain paper.','The incoming call protocol opening.'],mirror:'When did you last access the delinquent tax list?',p:'P +9',l:'L +9',tx:'T -3'},{num:'IV',title:'The Probate Filing',law:'When someone dies owning real estate, the estate announces itself.',philosophy:['The probate filing is public record.','The personal representative faces a unique combination of challenges.','The agent who arrives with genuine competence has no competition.'],cheat:['Access the probate court filings for your county.','Prioritize contacts by time and equity.','The contact approach: a professional letter.','Know the complete estate sale legal mechanics.','Build the probate attorney relationship.'],mirror:'How many estate sales closed in your market last year?',p:'P +8',l:'L +9',tx:'T -3'},{num:'V',title:'The Reluctant Partner',law:'The transaction is blocked by the person who is not speaking.',philosophy:['The enthusiastic partner has already bought.','The reluctant partner\'s reluctance is about a specific, unspoken fear.','The fear can only be addressed in a private moment.'],cheat:['Identify the reluctant partner within the first ten minutes.','Consciously redirect sixty percent of your attention.','Create the private conversation moment.','The specific question that unblocks the most transactions.','The follow-up call to the reluctant partner specifically.'],mirror:'Who was the reluctant partner in your last five transactions?',p:'P +8',l:'L +10',tx:'T -2'}];
+
+/* DOCTRINE DATA */
+var DOCTRINE_FULL=[{num:'I',title:'The Pre-Decision',law:'Every transaction is decided before the first word of the presentation.',philosophy:['There is a sequence of events in every first client encounter that most agents have never mapped.','The verdict is about one variable: do you need this deal.','The surplus position is a professional performance instrument.'],cheat:['Calculate your liquid runway.','Run the Zero Consequence Review.','Rehearse genuine indifference.','The Ninety-Second Discipline.','Maintain the Signal Ledger.'],mirror:'What is your exact liquid runway right now?',p:'P +9',l:'L +8',tx:'T -2'},{num:'II',title:'The Tax of Transparency',law:'Voluntary disclosure converts limitation into trust deposit worth 10x.',philosophy:['Every agent manages concealments.','Disclosure generates Love deposits.','The math is not close.'],cheat:['Run the Transparency Inventory.','Apply the Disclosure Calculus.','The Disclosure Opening.','The Limitation Disclosure Formula.'],mirror:'Name the truth you are most actively managing.',p:'P +7',l:'L +9',tx:'T -2'},{num:'III',title:'The Delinquent Tax List',law:'The pre-distress seller is in the county records.',philosophy:['The delinquent list is public record.','The agent provides genuine help.','Response rate: 30 to 45 percent.'],cheat:['Locate the list for your county.','Filter and cross-reference.','Handwritten note approach.','Incoming call protocol.'],mirror:'When did you last access the list?',p:'P +9',l:'L +9',tx:'T -3'},{num:'IV',title:'The Probate Filing',law:'The estate announces itself in probate court.',philosophy:['The filing is public record.','The representative faces unique challenges.','Fewer than five agents access these records.'],cheat:['Access probate filings.','Prioritize by time and equity.','Professional letter approach.','Know the legal mechanics.','Build attorney relationships.'],mirror:'How many estate sales in your market?',p:'P +8',l:'L +9',tx:'T -3'},{num:'V',title:'The Reluctant Partner',law:'The transaction is blocked by the person not speaking.',philosophy:['The enthusiastic partner is already sold.','The reluctance is about an unspoken fear.','It can only be addressed in private.'],cheat:['Identify within ten minutes.','Redirect sixty percent of attention.','Create private moment.','The unblocking question.','Follow up call specifically.'],mirror:'Who was the reluctant partner?',p:'P +8',l:'L +10',tx:'T -2'},{num:'VI',title:'The Net Sheet First',law:'The real question is almost never about price.',philosophy:['The real agenda: can I afford this move?','The agent who opens with the net sheet wins.'],cheat:['Build the template.','The opening.','Fill it together.'],mirror:'When did they first see net proceeds?',p:'P +8',l:'L +9',tx:'T -2'},{num:'VII',title:'The Permit Intelligence',law:'Every permit reveals intention before the owner knows.',philosophy:['The signal predates the listing by 6-18 months.','The overimprovement is most valuable.'],cheat:['Access permit records.','Map four data points.','Contact during renovation.'],mirror:'How many renovations underway now?',p:'P +9',l:'L +10',tx:'T -3'},{num:'VIII',title:'The Divorce Attorney',law:'The attorney needs one agent they trust.',philosophy:['The position is vacant in most markets.','85% conversion rate from referral.'],cheat:['Identify family law attorneys.','Learn the legal framework.','Formal commitment letter.'],mirror:'How many attorneys do you know?',p:'P +9',l:'L +9',tx:'T -2'},{num:'XI',title:'The Appraisal Package',law:'The agent who provides the right dataset controls the outcome.',philosophy:['The MLS record does not show everything.','The informed assessment protects everyone.'],cheat:['Build the template.','Deliver before inspection.','Negative comparable analysis.'],mirror:'How many appraisals had packages?',p:'P +9',l:'L +7',tx:'T -3'},{num:'XX',title:'The Commission Tax Trap',law:'The tax system extracts maximum from the unaware agent.',philosophy:['Sole proprietors pay the most.','Four decisions change this permanently.'],cheat:['Calculate effective rate.','S-corp election.','Home office deduction.','Mileage log.','SEP-IRA.'],mirror:'What is your effective tax rate?',p:'P +10',l:'L +5',tx:'T -2'}];
 (function(){var feed=document.getElementById('doctrine-feed');if(!feed)return;var html='';DOCTRINE_FULL.forEach(function(d){html+='<div class="estate-block reveal"><div class="eb-header"><span class="eb-num">'+d.num+'</span><span class="eb-title">'+d.title+'</span></div><div class="eb-law">'+d.law+'</div><div class="eb-body">';d.philosophy.forEach(function(p){html+='<p>'+p+'</p>';});html+='</div><div class="eb-cheat"><div class="eb-cheat-title">THE CHEAT CODE</div>';d.cheat.forEach(function(s,i){html+='<div class="eb-step"><span class="eb-step-num">0'+(i+1)+'</span><span class="eb-step-body">'+s+'</span></div>';});html+='</div><div class="eb-plt"><span class="plt-p">'+d.p+'</span><span class="plt-l">'+d.l+'</span><span class="plt-t">'+d.tx+'</span></div><div class="mirror"><strong>MIRROR</strong>'+d.mirror+'</div></div>';});feed.innerHTML=html;observeReveal();})();
 (function(){var cont=document.getElementById('estate-full-content');if(!cont)return;var html='';DOCTRINE_FULL.forEach(function(d){html+='<div class="estate-section reveal"><div class="eb-header"><span class="eb-num">'+d.num+'</span><span class="eb-title" style="font-family:\'Cinzel\',serif;font-size:28px;color:var(--text);">'+d.title+'</span></div><div class="full-estate-law">'+d.law+'</div><div class="full-estate-philosophy">';d.philosophy.forEach(function(p){html+='<p>'+p+'</p>';});html+='</div><div class="full-estate-cheat-title">THE CHEAT CODE</div>';d.cheat.forEach(function(s,i){html+='<div class="full-estate-step"><strong style="font-family:\'Cinzel\',serif;font-size:10px;color:var(--gold);">0'+(i+1)+'</strong>&nbsp;&nbsp;'+s+'</div>';});html+='<div class="eb-plt" style="margin-top:20px;"><span class="plt-p">'+d.p+'</span><span class="plt-l">'+d.l+'</span><span class="plt-t">'+d.tx+'</span></div><div class="full-estate-mirror"><strong>MIRROR</strong>'+d.mirror+'</div></div>';});html+='<div class="estate-section reveal" style="text-align:center;padding:60px 0;"><div style="font-family:\'Cinzel\',serif;font-size:11px;letter-spacing:.5em;color:var(--gold);margin-bottom:20px;">ESTATES VI THROUGH XL</div><div style="font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:26px;color:var(--text);margin-bottom:16px;">Thirty-five more Estates remain.</div><a href="THE_ESTATE_FINAL.docx" download class="btn-g">Download The Complete Estate</a></div>';cont.innerHTML=html;observeReveal();})();
+
+/* CALCULATORS */
 function id(x){return document.getElementById(x);}function fmt(n){return '$'+Math.abs(Math.round(n)).toLocaleString();}function showRes(x){var el=id(x);if(el)el.classList.add('on');}
-var CALCS=[{id:'c1',label:'Calculator 01',name:'Net Per Transaction',fields:[{id:'c1g',label:'Gross Commission ($)',val:9200},{id:'c1s',label:'Split You Keep (%)',val:70},{id:'c1m',label:'Annual Marketing Spend ($)',val:10000},{id:'c1t',label:'Annual Transactions',val:18},{id:'c1h',label:'Hours Per Transaction',val:48}],fn:'calcNet1',results:[{id:'c1a',label:'After split'},{id:'c1b',label:'Marketing',cls:'red'},{id:'c1c',label:'Time cost @$75/hr',cls:'red'},{id:'c1d',label:'SE Tax',cls:'red'},{id:'c1e',label:'Actual net',cls:'gold'},{id:'c1f',label:'You keep'}]},{id:'c2',label:'Calculator 02',name:'Referral Gap & Revenue',fields:[{id:'c2c',label:'Current Referral Rate (%)',val:22},{id:'c2v',label:'Annual Transaction Volume',val:18},{id:'c2n',label:'Net Commission Per Deal ($)',val:3800}],fn:'calcRef1',results:[{id:'c2a',label:'Current referral deals'},{id:'c2b',label:'Capable at 65%',cls:'green'},{id:'c2c2',label:'Gap in deals/yr'},{id:'c2d',label:'Annual revenue of gap',cls:'gold'},{id:'c2e',label:'Hours to close it'},{id:'c2f',label:'Return per hour',cls:'green'}]},{id:'c3',label:'Calculator 03',name:'Database Asset Value',fields:[{id:'c3c',label:'Past Clients in Database',val:60},{id:'c3n',label:'Net Commission Per Deal ($)',val:3800}],fn:'calcDB1',results:[{id:'c3a',label:'Maintained (65%, 3yr)',cls:'green'},{id:'c3b',label:'Unmaintained (11%, 3yr)',cls:'red'},{id:'c3c2',label:'3-year revenue gap',cls:'gold'},{id:'c3d',label:'Annual hrs required'},{id:'c3e',label:'Return per hour',cls:'green'}]},{id:'c4',label:'Calculator 04',name:'Runway & Signal Score',fields:[{id:'c4r',label:'Liquid Reserves ($)',val:25000},{id:'c4e',label:'Monthly Expenses ($)',val:6500}],fn:'calcRun1',results:[{id:'c4a',label:'Runway',cls:'gold'},{id:'c4b',label:'Signal Quality'},{id:'c4c',label:'Gap to 6-month target'},{id:'c4d',label:'',cls:'italic'}]},{id:'c5',label:'Calculator 05',name:'Available Tax Savings',fields:[{id:'c5p',label:'Annual Net Profit ($)',val:120000},{id:'c5s',label:'Structure',type:'select',options:['Sole Proprietor','S-Corporation'],vals:['sole','scorp']},{id:'c5o',label:'Home Office % of Home',val:12},{id:'c5h',label:'Annual Home Costs ($)',val:28000},{id:'c5mi',label:'Business Miles',val:18000}],fn:'calcTax1',results:[{id:'c5a',label:'S-corp savings',cls:'green'},{id:'c5b',label:'Home office deduction',cls:'green'},{id:'c5c',label:'Mileage deduction',cls:'green'},{id:'c5d',label:'SEP-IRA max',cls:'green'},{id:'c5e',label:'Total annual savings',cls:'gold'},{id:'c5f',label:'10-year compound',cls:'gold'}]},{id:'c6',label:'Calculator 06',name:'Commission Defense Value',fields:[{id:'c6g',label:'Full Commission Rate (%)',val:3},{id:'c6d',label:'Discounted Rate (%)',val:2.5},{id:'c6p',label:'Sale Price ($)',val:450000},{id:'c6t',label:'Annual Transactions at This Price',val:12}],fn:'calcComm',results:[{id:'c6a',label:'Full commission per deal'},{id:'c6b',label:'Discounted commission'},{id:'c6c',label:'Concession per deal',cls:'red'},{id:'c6d2',label:'Annual revenue surrendered',cls:'red'},{id:'c6e',label:'5-year compound surrendered',cls:'red'},{id:'c6f',label:'Verdict',cls:'gold'}]},{id:'c7',label:'Calculator 07',name:'Market Share Calculator',fields:[{id:'c7t',label:'Total Transactions in Market/Year',val:2400},{id:'c7y',label:'Your Annual Transactions',val:18},{id:'c7g',label:'Target Market Share (%)',val:2}],fn:'calcShare',results:[{id:'c7a',label:'Your current market share'},{id:'c7b',label:'Transactions at target',cls:'green'},{id:'c7c',label:'Additional transactions needed'},{id:'c7d',label:'Revenue at target',cls:'gold'},{id:'c7e',label:'Additional revenue at target',cls:'green'}]},{id:'c8',label:'Calculator 08',name:'Listing Price Decision Tool',fields:[{id:'c8a',label:'Target List Price ($)',val:499000},{id:'c8m',label:'Market Supported Price ($)',val:475000},{id:'c8r',label:'Commission Rate (%)',val:3},{id:'c8c',label:'Monthly Carrying Cost ($)',val:3800}],fn:'calcPrice',results:[{id:'c8r2',label:'Commission at target price'},{id:'c8s',label:'Commission at supported price'},{id:'c8dom',label:'Estimated extra DOM',cls:'red'},{id:'c8cc',label:'Extra carrying cost',cls:'red'},{id:'c8net',label:'Net advantage of correct price',cls:'gold'},{id:'c8v',label:'Verdict',cls:'gold'}]},{id:'c9',label:'Calculator 09',name:'Open House Pipeline Value',fields:[{id:'c9o',label:'Open Houses Per Month',val:4},{id:'c9v',label:'Serious Buyer Contacts Per OH',val:2},{id:'c9r',label:'Conversion Rate (%)',val:40},{id:'c9c',label:'Net Commission Per Transaction ($)',val:3800}],fn:'calcOH',results:[{id:'c9a',label:'Monthly serious contacts'},{id:'c9b',label:'Monthly conversions'},{id:'c9d',label:'Annual additional transactions',cls:'green'},{id:'c9e',label:'Annual additional revenue',cls:'gold'},{id:'c9f',label:'Revenue per open house',cls:'green'}]},{id:'c10',label:'Calculator 10',name:'The Surplus Builder',fields:[{id:'c10e',label:'Monthly Expenses ($)',val:6500},{id:'c10c',label:'Current Liquid Reserves ($)',val:15000},{id:'c10s',label:'Monthly Savings Capacity ($)',val:1200}],fn:'calcSurplus',results:[{id:'c10a',label:'Current runway'},{id:'c10b',label:'Target (6 months)',cls:'gold'},{id:'c10gap',label:'Gap to target',cls:'red'},{id:'c10mo',label:'Months to target at current savings'},{id:'c10sig',label:'Current signal quality'},{id:'c10v',label:'Signal at target',cls:'green'}]}];
+var CALCS=[{id:'c1',label:'Calculator 01',name:'Net Per Transaction',fields:[{id:'c1g',label:'Gross Commission ($)',val:9200},{id:'c1s',label:'Split You Keep (%)',val:70},{id:'c1m',label:'Annual Marketing ($)',val:10000},{id:'c1t',label:'Annual Transactions',val:18},{id:'c1h',label:'Hours Per Transaction',val:48}],fn:'calcNet1',results:[{id:'c1a',label:'After split'},{id:'c1b',label:'Marketing',cls:'red'},{id:'c1c',label:'Time cost',cls:'red'},{id:'c1d',label:'SE Tax',cls:'red'},{id:'c1e',label:'Actual net',cls:'gold'},{id:'c1f',label:'You keep'}]},{id:'c2',label:'Calculator 02',name:'Referral Gap',fields:[{id:'c2c',label:'Current Referral Rate (%)',val:22},{id:'c2v',label:'Annual Volume',val:18},{id:'c2n',label:'Net Commission ($)',val:3800}],fn:'calcRef1',results:[{id:'c2a',label:'Current referrals'},{id:'c2b',label:'Capable at 65%',cls:'green'},{id:'c2c2',label:'Gap in deals'},{id:'c2d',label:'Revenue gap',cls:'gold'},{id:'c2e',label:'Hours to close'},{id:'c2f',label:'Return per hour',cls:'green'}]},{id:'c3',label:'Calculator 03',name:'Database Value',fields:[{id:'c3c',label:'Database Size',val:60},{id:'c3n',label:'Net Commission ($)',val:3800}],fn:'calcDB1',results:[{id:'c3a',label:'Maintained (65%)',cls:'green'},{id:'c3b',label:'Unmaintained (11%)',cls:'red'},{id:'c3c2',label:'3-year gap',cls:'gold'},{id:'c3d',label:'Annual hours'},{id:'c3e',label:'Return per hour',cls:'green'}]},{id:'c4',label:'Calculator 04',name:'Runway & Signal',fields:[{id:'c4r',label:'Liquid Reserves ($)',val:25000},{id:'c4e',label:'Monthly Expenses ($)',val:6500}],fn:'calcRun1',results:[{id:'c4a',label:'Runway',cls:'gold'},{id:'c4b',label:'Signal Quality'},{id:'c4c',label:'Gap to 6-month'},{id:'c4d',label:'',cls:'italic'}]},{id:'c5',label:'Calculator 05',name:'Tax Savings',fields:[{id:'c5p',label:'Annual Net Profit ($)',val:120000},{id:'c5s',label:'Structure',type:'select',options:['Sole Prop','S-Corp'],vals:['sole','scorp']},{id:'c5o',label:'Home Office %',val:12},{id:'c5h',label:'Annual Home Costs ($)',val:28000},{id:'c5mi',label:'Business Miles',val:18000}],fn:'calcTax1',results:[{id:'c5a',label:'S-corp savings',cls:'green'},{id:'c5b',label:'Home office',cls:'green'},{id:'c5c',label:'Mileage',cls:'green'},{id:'c5d',label:'SEP-IRA',cls:'green'},{id:'c5e',label:'Total annual',cls:'gold'},{id:'c5f',label:'10-year compound',cls:'gold'}]},{id:'c6',label:'Calculator 06',name:'Commission Defense',fields:[{id:'c6g',label:'Full Rate (%)',val:3},{id:'c6d',label:'Discounted Rate (%)',val:2.5},{id:'c6p',label:'Sale Price ($)',val:450000},{id:'c6t',label:'Annual Transactions',val:12}],fn:'calcComm',results:[{id:'c6a',label:'Full commission'},{id:'c6b',label:'Discounted'},{id:'c6c',label:'Per deal',cls:'red'},{id:'c6d2',label:'Annual',cls:'red'},{id:'c6e',label:'5-year',cls:'red'},{id:'c6f',label:'Verdict',cls:'gold'}]},{id:'c7',label:'Calculator 07',name:'Market Share',fields:[{id:'c7t',label:'Market Transactions/Year',val:2400},{id:'c7y',label:'Your Transactions',val:18},{id:'c7g',label:'Target Share (%)',val:2}],fn:'calcShare',results:[{id:'c7a',label:'Current share'},{id:'c7b',label:'At target',cls:'green'},{id:'c7c',label:'Additional needed'},{id:'c7d',label:'Revenue at target',cls:'gold'},{id:'c7e',label:'Additional revenue',cls:'green'}]},{id:'c8',label:'Calculator 08',name:'Price Decision',fields:[{id:'c8a',label:'Target Price ($)',val:499000},{id:'c8m',label:'Supported Price ($)',val:475000},{id:'c8r',label:'Commission Rate (%)',val:3},{id:'c8c',label:'Monthly Carrying ($)',val:3800}],fn:'calcPrice',results:[{id:'c8r2',label:'At target'},{id:'c8s',label:'At supported'},{id:'c8dom',label:'Extra DOM',cls:'red'},{id:'c8cc',label:'Extra carrying',cls:'red'},{id:'c8net',label:'Net advantage',cls:'gold'},{id:'c8v',label:'Verdict',cls:'gold'}]},{id:'c9',label:'Calculator 09',name:'Open House Value',fields:[{id:'c9o',label:'Open Houses/Month',val:4},{id:'c9v',label:'Serious Contacts/OH',val:2},{id:'c9r',label:'Conversion (%)',val:40},{id:'c9c',label:'Net Commission ($)',val:3800}],fn:'calcOH',results:[{id:'c9a',label:'Monthly contacts'},{id:'c9b',label:'Monthly conversions'},{id:'c9d',label:'Annual deals',cls:'green'},{id:'c9e',label:'Annual revenue',cls:'gold'},{id:'c9f',label:'Per open house',cls:'green'}]},{id:'c10',label:'Calculator 10',name:'Surplus Builder',fields:[{id:'c10e',label:'Monthly Expenses ($)',val:6500},{id:'c10c',label:'Current Reserves ($)',val:15000},{id:'c10s',label:'Monthly Savings ($)',val:1200}],fn:'calcSurplus',results:[{id:'c10a',label:'Current runway'},{id:'c10b',label:'Target (6 mo)',cls:'gold'},{id:'c10gap',label:'Gap',cls:'red'},{id:'c10mo',label:'Months to target'},{id:'c10sig',label:'Signal quality'},{id:'c10v',label:'Signal at target',cls:'green'}]}];
 function buildCalcHTML(calc){var html='<div class="calc-panel"><div class="cp-lbl">'+calc.label+'</div><div class="cp-name">'+calc.name+'</div>';calc.fields.forEach(function(f){html+='<div class="ig"><label>'+f.label+'</label>';if(f.type==='select'){html+='<select class="ti" id="'+f.id+'">';f.options.forEach(function(o,i){html+='<option value="'+(f.vals?f.vals[i]:o)+'">'+o+'</option>';});html+='</select>';}else{html+='<input class="ti" id="'+f.id+'" type="number" value="'+f.val+'">';}html+='</div>';});html+='<button class="t-btn" onclick="'+calc.fn+'()">Calculate</button><div class="t-res" id="res-'+calc.id+'">';calc.results.forEach(function(r){html+='<div class="rr"><span class="rl">'+r.label+'</span><span class="rv'+(r.cls?' '+r.cls:'')+'" id="'+r.id+'">-</span></div>';});html+='</div></div>';return html;}
 (function(){var bc=document.getElementById('brief-calcs');if(!bc)return;var html='';CALCS.slice(0,5).forEach(function(c){html+=buildCalcHTML(c);});bc.innerHTML=html;})();
 (function(){var ac=document.getElementById('arsenal-calcs');if(!ac)return;var html='';CALCS.forEach(function(c){html+=buildCalcHTML(c);});ac.innerHTML=html;})();
 function calcNet1(){var g=+id('c1g').value||0,sp=+id('c1s').value/100||.7,m=+id('c1m').value||0,tx=+id('c1t').value||1,h=+id('c1h').value||48;var as=g*sp,ma=m/tx,tc=h*75,sub=as-ma-tc,se=Math.max(0,sub*.153*.9235),net=sub-se;id('c1a').textContent=fmt(as);id('c1b').textContent='- '+fmt(ma);id('c1c').textContent='- '+fmt(tc);id('c1d').textContent='- '+fmt(se);id('c1e').textContent=fmt(net);id('c1f').textContent=(net/g*100).toFixed(1)+'%';showRes('res-c1');}
 function calcRef1(){var c=+id('c2c').value/100||.22,v=+id('c2v').value||18,n=+id('c2n').value||3800,cap=.65;var gap=(cap-c)*v,rev=gap*n,hrs=Math.round(v*1.5);id('c2a').textContent=(c*v).toFixed(1);id('c2b').textContent=(cap*v).toFixed(1);id('c2c2').textContent=gap.toFixed(1);id('c2d').textContent=fmt(rev);id('c2e').textContent=hrs+' hrs/yr';id('c2f').textContent='$'+Math.round(rev/hrs)+'/hr';showRes('res-c2');}
 function calcDB1(){var cl=+id('c3c').value||60,co=+id('c3n').value||3800;var ma=Math.round(cl*.65),um=Math.round(cl*.11),gap=ma-um;id('c3a').textContent=ma+' referrals';id('c3b').textContent=um+' referrals';id('c3c2').textContent=fmt(gap*co);id('c3d').textContent=cl+' hrs/yr';id('c3e').textContent='$'+Math.round(gap*co/3/cl)+'/hr';showRes('res-c3');}
-function calcRun1(){var r=+id('c4r').value||0,e=+id('c4e').value||1,run=r/e,gap=Math.max(0,(6-run)*e);var sig,read;if(run>=7){sig='Excellent - Abundance';read='The signal broadcasts trust before you speak.';}else if(run>=5){sig='Strong - Solid Position';read='Good foundation. One more month closes the gap.';}else if(run>=3){sig='Moderate - Build Urgently';read='Need is influencing your signal.';}else if(run>=1){sig='Weak - Need-Based Signal';read='Cannot afford to lose the next listing.';}else{sig='Critical - Compromised';read='The surplus is the first and only priority.';}id('c4a').textContent=run.toFixed(1)+' months';id('c4b').textContent=sig;id('c4c').textContent=gap>0?fmt(gap)+' needed':'Target met';id('c4d').textContent=read;showRes('res-c4');}
+function calcRun1(){var r=+id('c4r').value||0,e=+id('c4e').value||1,run=r/e,gap=Math.max(0,(6-run)*e);var sig,read;if(run>=7){sig='Excellent - Abundance';read='The signal broadcasts trust.';}else if(run>=5){sig='Strong - Solid';read='Good foundation.';}else if(run>=3){sig='Moderate - Build';read='Need is influencing signal.';}else if(run>=1){sig='Weak';read='Cannot afford to lose next listing.';}else{sig='Critical';read='Surplus is the first priority.';}id('c4a').textContent=run.toFixed(1)+' months';id('c4b').textContent=sig;id('c4c').textContent=gap>0?fmt(gap)+' needed':'Target met';id('c4d').textContent=read;showRes('res-c4');}
 function calcTax1(){var p=+id('c5p').value||0,st=id('c5s').value;var op=+id('c5o').value/100||.12,hc=+id('c5h').value||0,mi=+id('c5mi').value||0;var sc=st==='sole'?p*.4*.153*.5:0,od=hc*op,md=mi*.67,sep=Math.min(p*.20,66000),tr=.28;var total=sc+(od+md+sep)*tr,comp=total*((Math.pow(1.07,10)-1)/.07);id('c5a').textContent=st==='sole'?fmt(sc)+'/yr':'Already elected';id('c5b').textContent=fmt(od)+' deduction';id('c5c').textContent=fmt(md)+' deduction';id('c5d').textContent=fmt(sep)+' deductible';id('c5e').textContent=fmt(total)+'/yr';id('c5f').textContent=fmt(Math.round(comp));showRes('res-c5');}
-function calcComm(){var full=+id('c6g').value/100||.03,disc=+id('c6d').value/100||.025,price=+id('c6p').value||0,txns=+id('c6t').value||1;var fc=price*full,dc=price*disc,diff=fc-dc,annual=diff*txns,comp5=annual*5;id('c6a').textContent=fmt(fc);id('c6b').textContent=fmt(dc);id('c6c').textContent=fmt(diff)+' per deal';id('c6d2').textContent=fmt(annual);id('c6e').textContent=fmt(comp5);id('c6f').textContent=comp5>50000?'Hold the rate. The compound is decisive.':'The rate is defensible. Defend it.';showRes('res-c6');}
+function calcComm(){var full=+id('c6g').value/100||.03,disc=+id('c6d').value/100||.025,price=+id('c6p').value||0,txns=+id('c6t').value||1;var fc=price*full,dc=price*disc,diff=fc-dc,annual=diff*txns,comp5=annual*5;id('c6a').textContent=fmt(fc);id('c6b').textContent=fmt(dc);id('c6c').textContent=fmt(diff)+' per deal';id('c6d2').textContent=fmt(annual);id('c6e').textContent=fmt(comp5);id('c6f').textContent=comp5>50000?'Hold the rate.':'Defend it.';showRes('res-c6');}
 function calcShare(){var total=+id('c7t').value||1,mine=+id('c7y').value||0,target=+id('c7g').value/100||.02;var curr=mine/total*100,ttxns=total*target,add=ttxns-mine,rev=ttxns*3800,addRev=add*3800;id('c7a').textContent=curr.toFixed(2)+'%';id('c7b').textContent=ttxns.toFixed(1);id('c7c').textContent=Math.max(0,add).toFixed(1);id('c7d').textContent=fmt(rev);id('c7e').textContent=fmt(Math.max(0,addRev));showRes('res-c7');}
-function calcPrice(){var target=+id('c8a').value||0,supported=+id('c8m').value||0,rate=+id('c8r').value/100||.03,carry=+id('c8c').value||0;var commTarget=target*rate,commSupp=supported*rate,priceDiff=target-supported;var extraDOM=Math.round(priceDiff/8000*14),extraCarry=extraDOM/30*carry;var netAdvantage=extraCarry+(priceDiff*.15);id('c8r2').textContent=fmt(commTarget);id('c8s').textContent=fmt(commSupp);id('c8dom').textContent=extraDOM+' days estimated';id('c8cc').textContent=fmt(extraCarry);id('c8net').textContent=fmt(netAdvantage)+' in favor of correct price';id('c8v').textContent=netAdvantage>5000?'Price at the supported number.':'Check the comparable data.';showRes('res-c8');}
+function calcPrice(){var target=+id('c8a').value||0,supported=+id('c8m').value||0,rate=+id('c8r').value/100||.03,carry=+id('c8c').value||0;var commTarget=target*rate,commSupp=supported*rate,priceDiff=target-supported;var extraDOM=Math.round(priceDiff/8000*14),extraCarry=extraDOM/30*carry;var netAdvantage=extraCarry+(priceDiff*.15);id('c8r2').textContent=fmt(commTarget);id('c8s').textContent=fmt(commSupp);id('c8dom').textContent=extraDOM+' days';id('c8cc').textContent=fmt(extraCarry);id('c8net').textContent=fmt(netAdvantage);id('c8v').textContent=netAdvantage>5000?'Price at supported number.':'Check comparables.';showRes('res-c8');}
 function calcOH(){var oh=+id('c9o').value||0,contacts=+id('c9v').value||0,conv=+id('c9r').value/100||.4,comm=+id('c9c').value||3800;var monthly=oh*contacts,convM=monthly*conv,annual=convM*12,rev=annual*comm,perOH=rev/(oh*12);id('c9a').textContent=monthly.toFixed(0);id('c9b').textContent=convM.toFixed(1);id('c9d').textContent=annual.toFixed(0);id('c9e').textContent=fmt(rev);id('c9f').textContent=fmt(perOH);showRes('res-c9');}
-function calcSurplus(){var e=+id('c10e').value||1,curr=+id('c10c').value||0,save=+id('c10s').value||1;var run=curr/e,target=6*e,gap=Math.max(0,target-curr),months=Math.ceil(gap/save);var sig=run>=6?'Abundance (Excellent)':run>=4?'Solid (Good)':run>=2?'Need-Influenced (Build)':'Scarcity (Critical)';var sigT='Abundance at target (Excellent)';id('c10a').textContent=run.toFixed(1)+' months';id('c10b').textContent=fmt(target);id('c10gap').textContent=fmt(gap);id('c10mo').textContent=months+' months';id('c10sig').textContent=sig;id('c10v').textContent=sigT;showRes('res-c10');}
-var SECRETS=[{estate:'ESTATE III',title:'The Delinquent Tax List Is the Most Motivated Seller Pool',preview:'Public record. Free access.',body:'Every county publishes a list of homeowners who have missed property tax payments. The agent who contacts these owners before any public crisis offers the option to preserve equity. Response rate: 30 to 45 percent.',p:'P +9',l:'L +9',tx:'T -3'},{estate:'ESTATE V',title:'The Reluctant Partner Decides Every Transaction',preview:'The enthusiastic partner is already closed.',body:'Every couple contains one person who has already decided and one who is the actual decision. The reluctance is about a specific, unspoken fear that can only be addressed in private.',p:'P +8',l:'L +10',tx:'T -2'},{estate:'ESTATE XI',title:'The Appraisal Package Changes the Outcome',preview:'The appraiser finds what the MLS shows. You can show more.',body:'A six-section document delivered before the inspection provides renovation documentation, comparable analysis, and explanation of why below-market sales should be excluded. Protects 20 to 30 percent more transactions.',p:'P +9',l:'L +7',tx:'T -3'},{estate:'ESTATE IV',title:'The Probate Filing Announces the Listing',preview:'Public court record.',body:'When someone dies owning real estate, the estate announces itself in probate court within thirty days. Fewer than five agents access these records systematically.',p:'P +8',l:'L +9',tx:'T -3'},{estate:'ESTATE I',title:'The First Ninety Seconds Are the Transaction',preview:'The client decides before the first word.',body:'The client\'s nervous system produces a verdict within ninety seconds: do you need this deal. The surplus position is a professional performance instrument.',p:'P +9',l:'L +8',tx:'T -2'},{estate:'ESTATE VII',title:'The Permit Pull Finds the Seller Before They Know',preview:'Six months before the listing exists.',body:'Every building permit reveals homeowner intention. The overimprovement is the most valuable: the renovation where the market ceiling makes the investment non-recoverable.',p:'P +9',l:'L +10',tx:'T -3'},{estate:'ESTATE VIII',title:'The Divorce Attorney Refers Every Buyer',preview:'One professional relationship.',body:'The divorce attorney needs exactly one agent they trust. In most markets, that position is vacant. Conversion rate from attorney referral: 85 percent.',p:'P +9',l:'L +9',tx:'T -2'},{estate:'ESTATE XIII',title:'The Open House Is Not a Listing Tool',preview:'3% of homes sell at the open house.',body:'The open house is a pipeline instrument. Three to five visitors have genuine purchase intent within ninety days. The follow-up call within 24 hours converts the visitor into the represented buyer.',p:'P +9',l:'L +8',tx:'T -3'},{estate:'ESTATE XX',title:'$25,000 to $40,000 per Year in Unnecessary Tax',preview:'Four decisions. One meeting. Every year.',body:'S-corp election, home office deduction, SEP-IRA contribution, mileage log. Together they save $25,000 to $40,000 annually for agents earning $120K-$200K.',p:'P +10',l:'L +5',tx:'T -2'},{estate:'ESTATE II',title:'The Concealment Costs More Than the Disclosure',preview:'The mathematics of transparency are not close.',body:'Management produces 144 to 192 Tax units over six months. Disclosure produces 3 Tax and 8 to 10 Love.',p:'P +7',l:'L +9',tx:'T -2'},{estate:'ESTATE XXIII',title:'The Decline Is the Most Expensive Free Thing',preview:'The wrong client costs more than they pay.',body:'The full cost of a difficult client relationship frequently exceeds the gross commission received. The decline is only available to the agent who does not need the transaction.',p:'P +8',l:'L +8',tx:'T -2'},{estate:'ESTATE XL',title:'The Transaction Closes. The Relationship Persists.',preview:'Build for the relationship.',body:'The forty Estates describe forty domains of practice. Together they produce a professional that clients have never encountered before and will never forget.',p:'P +9',l:'L +10',tx:'T -2'}];
+function calcSurplus(){var e=+id('c10e').value||1,curr=+id('c10c').value||0,save=+id('c10s').value||1;var run=curr/e,target=6*e,gap=Math.max(0,target-curr),months=Math.ceil(gap/save);var sig=run>=6?'Abundance':run>=4?'Solid':run>=2?'Need-Influenced':'Scarcity';var sigT='Abundance at target';id('c10a').textContent=run.toFixed(1)+' months';id('c10b').textContent=fmt(target);id('c10gap').textContent=fmt(gap);id('c10mo').textContent=months+' months';id('c10sig').textContent=sig;id('c10v').textContent=sigT;showRes('res-c10');}
+
+/* VAULT */
+var SECRETS=[{estate:'ESTATE III',title:'The Delinquent Tax List',preview:'Public record. Free access.',body:'Every county publishes a list of homeowners who missed property taxes. Response rate: 30 to 45 percent.',p:'P +9',l:'L +9',tx:'T -3'},{estate:'ESTATE V',title:'The Reluctant Partner',preview:'The enthusiastic partner is already closed.',body:'Every couple contains the actual decision-maker. The reluctance is about an unspoken fear.',p:'P +8',l:'L +10',tx:'T -2'},{estate:'ESTATE XI',title:'The Appraisal Package',preview:'You can show them more.',body:'A six-section document delivered before inspection protects 20 to 30 percent more transactions.',p:'P +9',l:'L +7',tx:'T -3'},{estate:'ESTATE IV',title:'The Probate Filing',preview:'Public court record.',body:'Fewer than five agents access these records systematically.',p:'P +8',l:'L +9',tx:'T -3'},{estate:'ESTATE I',title:'The First Ninety Seconds',preview:'The client decides before the first word.',body:'The surplus position is a professional performance instrument.',p:'P +9',l:'L +8',tx:'T -2'},{estate:'ESTATE VII',title:'The Permit Pull',preview:'Six months before the listing exists.',body:'Every building permit reveals homeowner intention.',p:'P +9',l:'L +10',tx:'T -3'},{estate:'ESTATE VIII',title:'The Divorce Attorney',preview:'One professional relationship.',body:'Conversion rate from attorney referral: 85 percent.',p:'P +9',l:'L +9',tx:'T -2'},{estate:'ESTATE XIII',title:'The Open House',preview:'3% of homes sell at the open house.',body:'The follow-up call within 24 hours converts the visitor.',p:'P +9',l:'L +8',tx:'T -3'},{estate:'ESTATE XX',title:'$25,000 to $40,000 in Unnecessary Tax',preview:'Four decisions. One meeting. Every year.',body:'S-corp, home office, SEP-IRA, mileage log.',p:'P +10',l:'L +5',tx:'T -2'},{estate:'ESTATE II',title:'The Concealment Costs More',preview:'The math is not close.',body:'Management: 144 to 192 Tax units. Disclosure: 3 Tax and 8 to 10 Love.',p:'P +7',l:'L +9',tx:'T -2'},{estate:'ESTATE XXIII',title:'The Decline',preview:'The wrong client costs more than they pay.',body:'The full cost frequently exceeds the gross commission.',p:'P +8',l:'L +8',tx:'T -2'},{estate:'ESTATE XL',title:'The Transaction Closes. The Relationship Persists.',preview:'Build for the relationship.',body:'Forty Estates describe forty domains of practice.',p:'P +9',l:'L +10',tx:'T -2'}];
 (function(){var vg=document.getElementById('vault-grid');if(!vg)return;var html='';SECRETS.forEach(function(s,i){html+='<div class="secret-card" onclick="toggleSecret('+i+')" id="sc-'+i+'"><div class="sc-estate">'+s.estate+'</div><div class="sc-title">'+s.title+'</div><div class="sc-preview">'+s.preview+'</div><div class="sc-plt"><span class="sc-p">'+s.p+'</span><span class="sc-l">'+s.l+'</span><span class="sc-t">'+s.tx+'</span></div><div class="sc-body">'+s.body+'</div></div>';});vg.innerHTML=html;})();
 function toggleSecret(i){var card=document.getElementById('sc-'+i);if(card)card.classList.toggle('open');}
-var SCENARIOS=[{title:'Accepting the Overpriced Listing',p:1,l:-6,t:9,note:'The commission arrives. The frustration follows. The referral never comes.'},{title:'Declining the Overpriced Listing',p:0,l:8,t:-2,note:'No immediate commission. Permanent professional signal.'},{title:'Delivering the Honest CMA',p:8,l:9,t:-2,note:'The seller may not like it. The transaction will work.'},{title:'Telling the Client What They Want to Hear',p:2,l:-5,t:9,note:'The listing is won. The transaction will fail.'},{title:'The Voluntary Disclosure',p:6,l:9,t:-3,note:'Costs something. Produces permanent trust.'},{title:'Managing a Concealment',p:0,l:-4,t:8,note:'The bandwidth consumed. The advice distorted.'},{title:'Building the Surplus Position',p:9,l:7,t:-3,note:'Costs now. Produces forever.'},{title:'The Referral Architecture Investment',p:9,l:10,t:-3,note:'60 hours per year. $267 per hour return.'},{title:'Requesting the Appraisal Package',p:9,l:7,t:-3,note:'Three hours. 20 to 30 percent more transactions protected.'},{title:'Attending the Probate Courthouse',p:8,l:9,t:-3,note:'One hour per week. Zero competition.'},{title:'The Cold Prospecting Call',p:2,l:1,t:7,note:'High volume. Low signal. Low conversion.'},{title:'The Handwritten Note to the Delinquent Tax Owner',p:9,l:9,t:-3,note:'Costs almost nothing. Almost no agent sends it.'}];
+
+/* PLT SCENARIOS */
+var SCENARIOS=[{title:'Accepting the Overpriced Listing',p:1,l:-6,t:9,note:'The commission arrives. The referral never comes.'},{title:'Declining the Overpriced Listing',p:0,l:8,t:-2,note:'No immediate commission. Permanent signal.'},{title:'Delivering the Honest CMA',p:8,l:9,t:-2,note:'The seller may not like it. The referral will come.'},{title:'Telling the Client What They Want',p:2,l:-5,t:9,note:'The listing is won. The transaction will fail.'},{title:'The Voluntary Disclosure',p:6,l:9,t:-3,note:'Costs something. Produces permanent trust.'},{title:'Managing a Concealment',p:0,l:-4,t:8,note:'The bandwidth consumed. The advice distorted.'},{title:'Building the Surplus',p:9,l:7,t:-3,note:'Costs now. Produces forever.'},{title:'Referral Architecture',p:9,l:10,t:-3,note:'60 hours per year. $267 per hour return.'},{title:'Appraisal Package',p:9,l:7,t:-3,note:'Three hours. 20 to 30 percent more protected.'},{title:'Probate Courthouse',p:8,l:9,t:-3,note:'One hour per week. Zero competition.'},{title:'Cold Prospecting',p:2,l:1,t:7,note:'High volume. Low signal. Low conversion.'},{title:'Handwritten Note',p:9,l:9,t:-3,note:'Costs almost nothing. Almost no agent sends it.'}];
 (function(){var sl=document.getElementById('scenario-list');if(!sl)return;var html='';SCENARIOS.forEach(function(s,i){html+='<div class="scenario-item" onclick="loadScenario('+i+')"><div class="si-title">'+s.title+'</div><div class="si-scores"><span style="color:var(--profit)">P '+s.p+'</span><span style="color:var(--love)">L '+s.l+'</span><span style="color:var(--tax)">T '+s.t+'</span></div></div>';});sl.innerHTML=html;})();
 function loadScenario(i){var s=SCENARIOS[i];id('sp').value=Math.max(0,s.p);id('sl').value=s.l;id('st').value=Math.max(0,s.t);score();id('sr').textContent=s.note;window.scrollTo(0,0);}
-function score(){var p=+id('sp').value,l=+id('sl').value,t=+id('st').value,tv=p+l-t;id('pv').textContent=p;id('lv').textContent=l;id('tv2').textContent=t;id('dp').textContent=p;id('dl').textContent=l;id('dt').textContent=t;id('tvv').textContent=tv;var r='';if(tv>=15)r='This decision compounds permanently.';else if(tv>=10)r='Strong True Value. Move.';else if(tv>=6)r='Positive but not exceptional. Can Tax be reduced?';else if(tv>=2)r='Marginal return. Examine the invisible costs.';else if(tv>=-2)r='Near zero True Value.';else if(tv>=-6)r='Negative True Value. Decline or restructure.';else r='This decision destroys more than it creates.';id('sr').textContent=r;id('tvv').style.color=tv>=5?'var(--gold)':tv>=0?'var(--text)':'#c49090';}
+function score(){var p=+id('sp').value,l=+id('sl').value,t=+id('st').value,tv=p+l-t;id('pv').textContent=p;id('lv').textContent=l;id('tv2').textContent=t;id('dp').textContent=p;id('dl').textContent=l;id('dt').textContent=t;id('tvv').textContent=tv;var r='';if(tv>=15)r='Compounds permanently.';else if(tv>=10)r='Strong True Value. Move.';else if(tv>=6)r='Positive. Can Tax be reduced?';else if(tv>=2)r='Marginal. Examine invisible costs.';else if(tv>=-2)r='Near zero.';else if(tv>=-6)r='Negative. Decline or restructure.';else r='Destroys more than it creates.';id('sr').textContent=r;id('tvv').style.color=tv>=5?'var(--gold)':tv>=0?'var(--text)':'#c49090';}
 function observeReveal(){document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('on');});}
 observeReveal();
+
+/* 3D ENGINE - ORIGINAL, UNCHANGED */
 function proj(x,y,z,cx,cy,fov){var s=fov/(fov+z);return{x:cx+x*s,y:cy+y*s,s:s,z:z};}
 function rX(v,a){return{x:v.x,y:v.y*Math.cos(a)-v.z*Math.sin(a),z:v.y*Math.sin(a)+v.z*Math.cos(a)};}
 function rY(v,a){return{x:v.x*Math.cos(a)+v.z*Math.sin(a),y:v.y,z:-v.x*Math.sin(a)+v.z*Math.cos(a)};}
@@ -442,152 +448,39 @@ function drawEstate(ctx,W,H,t,cx,cy,sc){var fov=sc*9,rx=-0.22,ry=t;var bg=ctx.cr
 var PY_V=[{x:0,y:-1,z:0},{x:-1,y:.5,z:-1},{x:1,y:.5,z:-1},{x:1,y:.5,z:1},{x:-1,y:.5,z:1}];
 var PY_F=[[0,1,2],[0,2,3],[0,3,4],[0,4,1],[1,4,3,2]];
 function drawPyramid(ctx,cx,cy,sc,rx,ry,alpha,col){var fov=sc*6;var tv=PY_V.map(function(v){var sv=xfv(v,rx,ry,0,sc);return{p:proj(sv.x,sv.y,sv.z,cx,cy,fov),v:sv};});PY_F.map(function(f){var z=0;f.forEach(function(i){z+=tv[i].v.z;});return{f:f,z:z/f.length};}).sort(function(a,b){return b.z-a.z;}).forEach(function(sf){var pts=sf.f.map(function(i){return tv[i].p;});ctx.beginPath();ctx.moveTo(pts[0].x,pts[0].y);for(var i=1;i<pts.length;i++)ctx.lineTo(pts[i].x,pts[i].y);ctx.closePath();var d=Math.max(0,Math.min(1,(sf.z+sc*2)/(sc*4)));ctx.fillStyle='rgba(4,3,1,'+(0.28+d*.25)+')';ctx.fill();ctx.strokeStyle=(col||GC)+(alpha*(0.3+d*.65))+')';ctx.lineWidth=.5+d*.9;ctx.stroke();});gw(ctx,(col||GC)+'0.8)',alpha*12);ctx.fillStyle=(col||GC)+(alpha*.7)+')';ctx.beginPath();ctx.arc(tv[0].p.x,tv[0].p.y,1.5,0,Math.PI*2);ctx.fill();ng(ctx);}
-(function(){var cv=document.getElementById('world'),ctx=cv.getContext('2d'),W,H,t=0;var pts=[],syms=[],wStars=[];var SYM_TYPES=['$','%','P','L','T','$','$'];var SYM_COLS=[GC,GC,PC,LC,TC,GC,GC];function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;init();}function init(){pts=[];for(var i=0;i<40;i++)pts.push({x:Math.random()*W,y:Math.random()*H,r:.3+Math.random()*1.2,vy:-(0.08+Math.random()*.3),a:Math.random()*Math.PI*2,sp:.005+Math.random()*.008,d:Math.random()});syms=[];for(var j=0;j<18;j++){var ti=Math.floor(Math.random()*SYM_TYPES.length);syms.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.4,vy:-(Math.random()*.5+.1),s:10+Math.random()*28,alpha:.05+Math.random()*.14,rot:Math.random()*Math.PI*2,dr:(Math.random()-.5)*.008,t:ti,col:SYM_COLS[ti],life:Math.random()*400,max:300+Math.random()*400});}wStars=[];for(var k=0;k<200;k++){wStars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.2+0.2,tw:Math.random()*Math.PI*2,ts:Math.random()*1.5+0.5,col:['rgba(255,255,255,','rgba(196,169,90,','rgba(168,196,212,','rgba(120,180,255,'][Math.floor(Math.random()*4)]});}}function draw(){t+=.016;ctx.clearRect(0,0,W,H);var bg=ctx.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#020208');bg.addColorStop(1,'#060605');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);wStars.forEach(function(ws){ws.tw+=ws.ts*0.015;var tw2=(Math.sin(ws.tw)*0.5+0.5)*0.6+0.4;ctx.beginPath();ctx.arc(ws.x,ws.y,ws.r,0,Math.PI*2);ctx.fillStyle=ws.col+tw2+')';ctx.fill();});ctx.strokeStyle=GC+'0.025)';ctx.lineWidth=.4;for(var gx=0;gx<W;gx+=80){ctx.beginPath();ctx.moveTo(gx,0);ctx.lineTo(gx,H);ctx.stroke();}for(var gy=0;gy<H;gy+=80){ctx.beginPath();ctx.moveTo(0,gy);ctx.lineTo(W,gy);ctx.stroke();}pts.forEach(function(p){p.y+=p.vy;p.a+=p.sp;if(p.y<-5){p.y=H+5;p.x=Math.random()*W;}var al=(Math.sin(p.a)*.5+.5)*(.08+p.d*.25);ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=GC+al+')';ctx.fill();});syms.forEach(function(s){s.x+=s.vx;s.y+=s.vy;s.rot+=s.dr;s.life++;if(s.y<-s.s*2||s.life>s.max){s.x=Math.random()*W;s.y=H+s.s;s.life=0;}var fa=Math.min(1,s.life/30)*Math.min(1,(s.max-s.life)/30);ctx.save();ctx.translate(s.x,s.y);ctx.rotate(s.rot);ctx.font='bold '+(s.s)+'px Cinzel,serif';ctx.fillStyle=(s.col||GC)+s.alpha*fa+')';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(SYM_TYPES[s.t],0,0);ctx.restore();});requestAnimationFrame(draw);}window.addEventListener('resize',resize);resize();draw();})();
-makeCanvas3D('gate-cv',function(ctx,W,H,t){
-  if(!window._gateStars){
-    window._gateStars=[];
-    for(var si=0;si<400;si++){
-      window._gateStars.push({
-        x:Math.random()*W,y:Math.random()*H,
-        r:Math.random()*2+0.3,
-        tw:Math.random()*Math.PI*2,ts:Math.random()*3+1,
-        col:['rgba(255,255,255,','rgba(220,200,140,','rgba(180,210,240,','rgba(255,220,200,','rgba(168,196,212,'][Math.floor(Math.random()*5)]
-      });
-    }
-    window._gateGal=[];
-    for(var gi=0;gi<4;gi++){
-      window._gateGal.push({
-        x:W*(0.1+gi*0.27),y:H*(0.1+Math.random()*0.25),
-        sc:25+Math.random()*35,rot:Math.random()*Math.PI*2,
-        rs:(Math.random()-0.5)*0.015,
-        col:['rgba(196,169,90,','rgba(168,200,255,','rgba(255,180,220,','rgba(150,255,200,'][gi]
-      });
-    }
-    window._gateNeon=[];
-    for(var n=0;n<40;n++){
-      window._gateNeon.push({
-        x:Math.random()*W,y:Math.random()*H,
-        vx:(Math.random()-0.5)*0.4,vy:(Math.random()-0.5)*0.4,
-        r:1+Math.random()*2,
-        col:['rgba(0,255,200,','rgba(100,180,255,','rgba(255,100,255,','rgba(100,255,100,','rgba(255,200,50,'][Math.floor(Math.random()*5)],
-        life:Math.random()*500
-      });
-    }
-  }
 
-  // Stars — BRIGHT and visible
-  window._gateStars.forEach(function(st){
-    st.tw+=st.ts*0.02;
-    var tw=(Math.sin(st.tw)*0.5+0.5)*0.8+0.2;
-    ctx.beginPath();ctx.arc(st.x,st.y,st.r,0,Math.PI*2);
-    ctx.fillStyle=st.col+tw+')';
-    if(st.r>1){ctx.shadowBlur=st.r*8;ctx.shadowColor=st.col+'0.5)';}
-    ctx.fill();
-  });
+/* WORLD CANVAS - ORIGINAL */
+(function(){var cv=document.getElementById('world'),ctx=cv.getContext('2d'),W,H,t=0;var pts=[],syms=[];var SYM_TYPES=['$','%','P','L','T','$','$'];var SYM_COLS=[GC,GC,PC,LC,TC,GC,GC];function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;init();}function init(){pts=[];for(var i=0;i<40;i++)pts.push({x:Math.random()*W,y:Math.random()*H,r:.3+Math.random()*1.2,vy:-(0.08+Math.random()*.3),a:Math.random()*Math.PI*2,sp:.005+Math.random()*.008,d:Math.random()});syms=[];for(var j=0;j<18;j++){var ti=Math.floor(Math.random()*SYM_TYPES.length);syms.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.4,vy:-(Math.random()*.5+.1),s:10+Math.random()*28,alpha:.05+Math.random()*.14,rot:Math.random()*Math.PI*2,dr:(Math.random()-.5)*.008,t:ti,col:SYM_COLS[ti],life:Math.random()*400,max:300+Math.random()*400});}}function draw(){t+=.016;ctx.clearRect(0,0,W,H);var bg=ctx.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#040403');bg.addColorStop(1,'#060605');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);ctx.strokeStyle=GC+'0.025)';ctx.lineWidth=.4;for(var gx=0;gx<W;gx+=80){ctx.beginPath();ctx.moveTo(gx,0);ctx.lineTo(gx,H);ctx.stroke();}for(var gy=0;gy<H;gy+=80){ctx.beginPath();ctx.moveTo(0,gy);ctx.lineTo(W,gy);ctx.stroke();}pts.forEach(function(p){p.y+=p.vy;p.a+=p.sp;if(p.y<-5){p.y=H+5;p.x=Math.random()*W;}var al=(Math.sin(p.a)*.5+.5)*(.08+p.d*.25);ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=GC+al+')';ctx.fill();});syms.forEach(function(s){s.x+=s.vx;s.y+=s.vy;s.rot+=s.dr;s.life++;if(s.y<-s.s*2||s.life>s.max){s.x=Math.random()*W;s.y=H+s.s;s.life=0;}var fa=Math.min(1,s.life/30)*Math.min(1,(s.max-s.life)/30);ctx.save();ctx.translate(s.x,s.y);ctx.rotate(s.rot);ctx.font='bold '+(s.s)+'px Cinzel,serif';ctx.fillStyle=(s.col||GC)+s.alpha*fa+')';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(SYM_TYPES[s.t],0,0);ctx.restore();});requestAnimationFrame(draw);}window.addEventListener('resize',resize);resize();draw();})();
 
-  // Galaxies — visible with spiral arms
-  window._gateGal.forEach(function(gal){
-    gal.rot+=gal.rs;
-    ctx.save();ctx.translate(gal.x,gal.y);
-    for(var arm=0;arm<4;arm++){
-      var aA=arm/4*Math.PI*2+gal.rot;
-      for(var ap=0;ap<35;ap++){
-        var d=ap/35*gal.sc,a=aA+ap*0.1;
-        var al=(1-ap/35)*0.15;
-        ctx.fillStyle=gal.col+al+')';
-        ctx.beginPath();ctx.arc(Math.cos(a)*d,Math.sin(a)*d*0.5,1.2,0,Math.PI*2);ctx.fill();
-      }
-    }
-    // Core glow
-    var cg=ctx.createRadialGradient(0,0,0,0,0,gal.sc*0.4);
-    cg.addColorStop(0,gal.col+'0.12)');cg.addColorStop(1,gal.col+'0)');
-    ctx.fillStyle=cg;ctx.beginPath();ctx.arc(0,0,gal.sc*0.4,0,Math.PI*2);ctx.fill();
-    ctx.restore();
-  });
-
-  // Neon particles — visible with glow
-  window._gateNeon.forEach(function(np){
-    np.x+=np.vx;np.y+=np.vy;np.life++;
-    if(np.x<-10)np.x=W+10;if(np.x>W+10)np.x=-10;
-    if(np.y<-10)np.y=H+10;if(np.y>H+10)np.y=-10;
-    var pulse=Math.sin(np.life*0.05)*0.3+0.7;
-    // Main dot
-    ctx.beginPath();ctx.arc(np.x,np.y,np.r*pulse,0,Math.PI*2);
-    ctx.fillStyle=np.col+(0.2+Math.sin(np.life*0.1)*0.15)+')';
-    ctx.shadowBlur=np.r*10;ctx.shadowColor=np.col+'0.4)';ctx.fill();
-    // Trail
-    ctx.beginPath();ctx.arc(np.x-np.vx*4,np.y-np.vy*4,np.r*0.5,0,Math.PI*2);
-    ctx.fillStyle=np.col+'0.08)';ctx.fill();
-  });
+/* GATE SPACE CANVAS - NEW: stars, galaxies, neon (z-index 0, behind gate-cv) */
+makeCanvas3D('gate-space',function(ctx,W,H,t){
+  if(!window._gs){window._gs=[];for(var i=0;i<400;i++)window._gs.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*2+.5,tw:Math.random()*Math.PI*2,ts:Math.random()*3+1,col:['rgba(255,255,255,','rgba(220,200,140,','rgba(180,210,240,'][Math.floor(Math.random()*3)]});}
+  window._gs.forEach(function(s){s.tw+=s.ts*.02;var tw=(Math.sin(s.tw)*.5+.5)*.8+.2;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=s.col+tw+')';if(s.r>1){ctx.shadowBlur=s.r*8;ctx.shadowColor=s.col+'0.5)';}ctx.fill();});
   ctx.shadowBlur=0;
-
-  // ═══ ORIGINAL: Orbital rings ═══
-  var cx2=W/2,cy2=H*.5;
-  for(var ri=0;ri<4;ri++){
-    var rsc=Math.min(W,H)*(.18+ri*.12);
-    var rrx=.15+ri*.05,rry=t*(0.08+ri*0.06);
-    ctx.save();ctx.strokeStyle=GC+(.08+ri*.04)+')';ctx.lineWidth=.5;
-    ctx.beginPath();var ff=true;
-    for(var ii=0;ii<=72;ii++){var aa=ii/72*Math.PI*2;
-      var vv=rX(rY({x:Math.cos(aa)*rsc,y:Math.sin(aa)*rsc,z:0},rry),rrx);
-      var pp=proj(vv.x,vv.y,vv.z,cx2,cy2,Math.min(W,H)*2);
-      if(ff){ctx.moveTo(pp.x,pp.y);ff=false;}else ctx.lineTo(pp.x,pp.y);
-    }ctx.stroke();ctx.restore();
-  }
-
-  // ═══ ORIGINAL: Floating pyramids ═══
-  for(var pi=0;pi<12;pi++){
-    var px=W*(0.05+pi*0.08),py=H*(0.2+Math.sin(t*0.8+pi*0.7)*0.3);
-    var psc=12+Math.sin(t+pi)*8;
-    var col=(pi%2===0)?GC:((pi%3===0)?PC:((pi%4===0)?LC:TC));
-    drawPyramid(ctx,px,py,psc,t*0.3+pi,t*0.5+pi*0.3,.15+Math.sin(t+pi)*0.08,col);
-  }
-
-  // ═══ ORIGINAL: Floating estate symbols ═══
-  var syms=['P','L','T','$','%','♦','⬥','◇','⟡','✦','★','◆'];
-  ctx.textAlign='center';ctx.textBaseline='middle';
-  for(var si=0;si<20;si++){
-    var sx2=W*(0.03+si*0.05),sy2=H*(0.15+Math.sin(t*0.5+si*0.9)*0.35);
-    var ss2=14+Math.sin(t+si*0.5)*10;
-    var sa2=.06+Math.sin(t*1.5+si)*0.06;
-    ctx.save();ctx.translate(sx2,sy2);ctx.rotate(Math.sin(t+si)*0.3);
-    ctx.font='bold '+ss2+'px Cinzel,serif';
-    ctx.fillStyle=GC+sa2+')';
-    ctx.shadowBlur=12;ctx.shadowColor=GC+'0.4)';
-    ctx.fillText(syms[si%syms.length],0,0);
-    ctx.restore();
-  }
-
-  // ═══ ORIGINAL: Particle burst ring ═══
-  for(var b=0;b<30;b++){
-    var ba=b/30*Math.PI*2+t*0.15;
-    var br=Math.min(W,H)*0.35;
-    var bx=cx2+Math.cos(ba)*br+Math.sin(t*2+b)*5;
-    var by=cy2+Math.sin(ba)*br*0.3+Math.cos(t*1.5+b)*5;
-    var bsz=1+Math.sin(b+t*3)*1.5;
-    ctx.beginPath();ctx.arc(bx,by,bsz,0,Math.PI*2);
-    ctx.fillStyle=GC+(0.15+Math.sin(t+b)*0.1)+')';
-    ctx.shadowBlur=8;ctx.shadowColor=GC+'0.3)';ctx.fill();
-  }
-
-  // ═══ ORIGINAL: Second particle ring ═══
-  for(var c=0;c<24;c++){
-    var ca=c/24*Math.PI*2-t*0.1;
-    var cr=Math.min(W,H)*0.45;
-    var cx3=cx2+Math.cos(ca)*cr;
-    var cy3=cy2+Math.sin(ca)*cr*0.25;
-    ctx.beginPath();ctx.arc(cx3,cy3,0.8,0,Math.PI*2);
-    ctx.fillStyle=PC+(0.08+Math.sin(t*2+c)*0.05)+')';ctx.fill();
-  }
-
-  // ═══ ORIGINAL: Central estate building ═══
-  drawEstate(ctx,W,H,t*.4,W/2,H*.5,Math.min(W,H)*.16);
+  if(!window._gg){window._gg=[];for(var i=0;i<4;i++)window._gg.push({x:W*(.1+i*.27),y:H*(.1+Math.random()*.25),sc:25+Math.random()*35,rot:Math.random()*Math.PI*2,rs:(Math.random()-.5)*.015,col:['rgba(196,169,90,','rgba(168,200,255,','rgba(255,180,220,','rgba(150,255,200,'][i]});}
+  window._gg.forEach(function(g){g.rot+=g.rs;ctx.save();ctx.translate(g.x,g.y);for(var a=0;a<4;a++){var aa=a/4*Math.PI*2+g.rot;for(var p=0;p<35;p++){var d=p/35*g.sc,ang=aa+p*.1;ctx.fillStyle=g.col+((1-p/35)*.15)+')';ctx.beginPath();ctx.arc(Math.cos(ang)*d,Math.sin(ang)*d*.5,1.2,0,Math.PI*2);ctx.fill();}}ctx.restore();});
+  if(!window._gn){window._gn=[];for(var i=0;i<40;i++)window._gn.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,r:1+Math.random()*2,col:['rgba(0,255,200,','rgba(100,180,255,','rgba(255,100,255,','rgba(100,255,100,','rgba(255,200,50,'][Math.floor(Math.random()*5)],life:Math.random()*500});}
+  window._gn.forEach(function(n){n.x+=n.vx;n.y+=n.vy;n.life++;if(n.x<-10)n.x=W+10;if(n.x>W+10)n.x=-10;if(n.y<-10)n.y=H+10;if(n.y>H+10)n.y=-10;var pulse=Math.sin(n.life*.05)*.3+.7;ctx.beginPath();ctx.arc(n.x,n.y,n.r*pulse,0,Math.PI*2);ctx.fillStyle=n.col+(.2+Math.sin(n.life*.1)*.15)+')';ctx.shadowBlur=n.r*10;ctx.shadowColor=n.col+'0.4)';ctx.fill();});
   ctx.shadowBlur=0;
 });
+
+/* GATE CANVAS - ORIGINAL: just drawEstate, nothing changed */
+makeCanvas3D('gate-cv',function(ctx,W,H,t){
+  drawEstate(ctx,W,H,t,W/2,H*.5,Math.min(W,H)*.14);
+});
+
+/* HERO CANVAS - ORIGINAL */
 (function(){var cv=document.getElementById('hero-cv');if(!cv)return;var ctx=cv.getContext('2d'),W,H,t=0;var objs=[];function makeObj(){var cols=[GC,PC,LC,TC,GC];var c=cols[Math.floor(Math.random()*cols.length)];var e=Math.floor(Math.random()*4);var x,y,vx=0,vy=0,spd=.6+Math.random()*1.8;if(e===0){x=-150;y=Math.random()*H;vx=spd;vy=(Math.random()-.5)*.5;}else if(e===1){x=W+150;y=Math.random()*H;vx=-spd;vy=(Math.random()-.5)*.5;}else if(e===2){x=Math.random()*W;y=-150;vy=spd*.6;vx=(Math.random()-.5)*.4;}else{x=Math.random()*W;y=H+150;vy=-spd*.6;vx=(Math.random()-.5)*.4;}return{x:x,y:y,vx:vx,vy:vy,sc:22+Math.random()*40,alpha:.2+Math.random()*.4,rx:Math.random()*Math.PI*2,ry:Math.random()*Math.PI*2,drx:(Math.random()-.5)*.018,dry:.018+Math.random()*.025,trail:[],life:0,max:350+Math.random()*300,col:c};}for(var i=0;i<12;i++)objs.push(makeObj());function resize(){var p=cv.parentElement;W=cv.width=p?p.offsetWidth:window.innerWidth;H=cv.height=p?p.offsetHeight:window.innerHeight;}function draw(){t+=.016;ctx.clearRect(0,0,W,H);drawEstate(ctx,W,H,t*.3,W/2,H*.6,Math.min(W,H)*.18);objs.forEach(function(ob){ob.x+=ob.vx;ob.y+=ob.vy;ob.rx+=ob.drx;ob.ry+=ob.dry;ob.life++;ob.trail.push({x:ob.x,y:ob.y});if(ob.trail.length>16)ob.trail.shift();for(var ti=1;ti<ob.trail.length;ti++){var pct=ti/ob.trail.length,ta=ob.trail[ti-1],tb=ob.trail[ti];ctx.strokeStyle=(ob.col)+pct*.12+')';ctx.lineWidth=pct*2;ctx.beginPath();ctx.moveTo(ta.x,ta.y);ctx.lineTo(tb.x,tb.y);ctx.stroke();}drawPyramid(ctx,ob.x,ob.y,ob.sc,ob.rx,ob.ry,ob.alpha*Math.min(1,ob.life/30)*Math.min(1,(ob.max-ob.life)/30),ob.col);if(ob.x<-200||ob.x>W+200||ob.y<-200||ob.y>H+200||ob.life>ob.max)Object.assign(ob,makeObj());});while(objs.length<12)objs.push(makeObj());requestAnimationFrame(draw);}window.addEventListener('resize',resize);resize();draw();})();
+
+/* SECTION CANVASES - ORIGINAL */
 ['doctrine-cv','estate-head-cv','brief-cv','arsenal-cv','vault-cv','plt-cv'].forEach(function(cvId){makeCanvas3D(cvId,function(ctx,W,H,t){var cols=[GC,PC,LC,TC];for(var i=0;i<5;i++){var cx=(i+.5)/5*W;var cy=H*.55+Math.sin(t*.8+i)*H*.12;var c=cols[i%4];drawPyramid(ctx,cx,cy,Math.min(W/7,H*.35),-.25,t*.3+i*.8,.3+Math.sin(t+i)*.1,c);}drawEstate(ctx,W,H,t*.2,W/2,H*.55,Math.min(W,H)*.08);});});
-makeCanvas3D('vault-cv',function(ctx,W,H,t){var cx=W/2,cy=H*.5,sc=Math.min(W,H)*.38,fov=Math.min(W,H)*1.8;var grd=ctx.createRadialGradient(cx,cy,0,cx,cy,sc*1.6);grd.addColorStop(0,GC+'0.1)');grd.addColorStop(1,GC+'0)');ctx.fillStyle=grd;ctx.fillRect(0,0,W,H);var ringCfg=[[sc,0.2,t*.12,.4],[sc*.78,.4,-t*.18,.3],[sc*.58,.7,t*.28,.35],[sc*.38,1.0,-t*.42,.4],[sc*.22,.3,t*.65,.5]];ringCfg.forEach(function(r){ctx.save();ctx.strokeStyle=GC+r[3]+')';ctx.lineWidth=.9;gw(ctx,GC+'0.7)',r[3]*18);ctx.beginPath();var f2=true;for(var i2=0;i2<=64;i2++){var a2=i2/64*Math.PI*2;var v2=rX(rY({x:Math.cos(a2)*r[0],y:Math.sin(a2)*r[0],z:0},r[2]),r[1]);var p2=proj(v2.x,v2.y,v2.z,cx,cy,fov);if(f2){ctx.moveTo(p2.x,p2.y);f2=false;}else ctx.lineTo(p2.x,p2.y);}ctx.stroke();ng(ctx);ctx.restore();});for(var gi=0;gi<20;gi++){var ga=gi/20*Math.PI*2+t*.12,ri2=sc,ro2=sc*1.12,tw2=.07;var tpts=[[Math.cos(ga)*ri2,Math.sin(ga)*ri2],[Math.cos(ga+tw2)*ri2,Math.sin(ga+tw2)*ri2],[Math.cos(ga+tw2)*ro2,Math.sin(ga+tw2)*ro2],[Math.cos(ga)*ro2,Math.sin(ga)*ro2]].map(function(p3){var v3=rX({x:p3[0],y:p3[1],z:0},.2);return proj(v3.x,v3.y,v3.z,cx,cy,fov);});ctx.beginPath();ctx.moveTo(tpts[0].x,tpts[0].y);tpts.forEach(function(p4){ctx.lineTo(p4.x,p4.y);});ctx.closePath();ctx.fillStyle='rgba(4,3,1,.4)';ctx.fill();ctx.strokeStyle=GC+'0.25)';ctx.lineWidth=.5;ctx.stroke();}var ds=sc*.14*(0.8+Math.sin(t*1.8)*.2);gw(ctx,GC+'1)',28);ctx.strokeStyle=GC+'0.7)';ctx.lineWidth=1.8;ctx.beginPath();ctx.moveTo(cx,cy-ds);ctx.lineTo(cx+ds,cy);ctx.lineTo(cx,cy+ds);ctx.lineTo(cx-ds,cy);ctx.closePath();ctx.stroke();ng(ctx);[[cx-W*.35,cy],[cx+W*.35,cy]].forEach(function(pos,pi){drawPyramid(ctx,pos[0],pos[1],Math.min(W,H)*.07,-.25,(pi===0?1:-1)*t*.5,.35+Math.sin(t+pi)*.1,GC);});});
-makeCanvas3D('plt-cv',function(ctx,W,H,t){var cx=W/2,cy=H*.5,sc=Math.min(W,H)*.12,fov=sc*6;var sphereCols=[PC,LC,TC];var spherePhases=[0,2.094,4.189];var sphereTilts=[.4,-.35,.55];var pos3=spherePhases.map(function(ph,i){var a=ph+t*.35;var v=rX({x:Math.cos(a)*1.5*sc,y:0,z:Math.sin(a)*1.5*sc},sphereTilts[i]);return{v:v,p:proj(v.x,v.y,v.z,cx,cy,fov),col:sphereCols[i]};});for(var ci=0;ci<3;ci++){var pa=pos3[ci].v,pb=pos3[(ci+1)%3].v;var pa2=proj(pa.x,pa.y,pa.z,cx,cy,fov),pb2=proj(pb.x,pb.y,pb.z,cx,cy,fov);ctx.strokeStyle=GC+'0.1)';ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(pa2.x,pa2.y);ctx.lineTo(pb2.x,pb2.y);ctx.stroke();}gw(ctx,GC+'0.5)',12);ctx.font='bold '+(sc*.5)+'px Cinzel,serif';ctx.fillStyle=GC+'0.4)';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('PLT',cx,cy);ng(ctx);['P','L','T'].forEach(function(lbl,i){var pd=pos3[i];var depth=Math.max(.4,pd.p.s);var gr=sc*.28*depth;gw(ctx,(pd.col)+'0.9)',depth*20);ctx.beginPath();ctx.arc(pd.p.x,pd.p.y,gr,0,Math.PI*2);ctx.strokeStyle=(pd.col)+(depth*.7)+')';ctx.lineWidth=1.4;ctx.stroke();ng(ctx);ctx.font='bold '+(gr*1.8)+'px Cinzel,serif';ctx.fillStyle=(pd.col)+(depth*.9)+')';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(lbl,pd.p.x,pd.p.y);});spherePhases.forEach(function(ph,i){ctx.save();ctx.strokeStyle=(sphereCols[i])+'0.1)';ctx.lineWidth=.5;ctx.beginPath();var f3=true;for(var oi=0;oi<=72;oi++){var a3=oi/72*Math.PI*2;var v3=rX({x:Math.cos(a3)*1.5*sc,y:0,z:Math.sin(a3)*1.5*sc},sphereTilts[i]);var p3=proj(v3.x,v3.y,v3.z,cx,cy,fov);if(f3){ctx.moveTo(p3.x,p3.y);f3=false;}else ctx.lineTo(p3.x,p3.y);}ctx.stroke();ctx.restore();});});
+
+/* VAULT CANVAS - ORIGINAL */
+makeCanvas3D('vault-cv',function(ctx,W,H,t){var cx=W/2,cy=H*.5,sc=Math.min(W,H)*.38,fov=Math.min(W,H)*1.8;var grd=ctx.createRadialGradient(cx,cy,0,cx,cy,sc*1.6);grd.addColorStop(0,GC+'0.1)');grd.addColorStop(1,GC+'0)');ctx.fillStyle=grd;ctx.fillRect(0,0,W,H);var ringCfg=[[sc,0.2,t*.12,.4],[sc*.78,.4,-t*.18,.3],[sc*.58,.7,t*.28,.35],[sc*.38,1.0,-t*.42,.4],[sc*.22,.3,t*.65,.5]];ringCfg.forEach(function(r){ctx.save();ctx.strokeStyle=GC+r[3]+')';ctx.lineWidth=.9;gw(ctx,GC+'0.7)',r[3]*18);ctx.beginPath();var f=true;for(var i=0;i<=64;i++){var a=i/64*Math.PI*2;var v=rX(rY({x:Math.cos(a)*r[0],y:Math.sin(a)*r[0],z:0},r[2]),r[1]);var p=proj(v.x,v.y,v.z,cx,cy,fov);if(f){ctx.moveTo(p.x,p.y);f=false;}else ctx.lineTo(p.x,p.y);}ctx.stroke();ng(ctx);ctx.restore();});for(var gi=0;gi<20;gi++){var ga=gi/20*Math.PI*2+t*.12,ri=sc,ro=sc*1.12,tw=.07;var tpts=[[Math.cos(ga)*ri,Math.sin(ga)*ri],[Math.cos(ga+tw)*ri,Math.sin(ga+tw)*ri],[Math.cos(ga+tw)*ro,Math.sin(ga+tw)*ro],[Math.cos(ga)*ro,Math.sin(ga)*ro]].map(function(p){var v=rX({x:p[0],y:p[1],z:0},.2);return proj(v.x,v.y,v.z,cx,cy,fov);});ctx.beginPath();ctx.moveTo(tpts[0].x,tpts[0].y);tpts.forEach(function(p){ctx.lineTo(p.x,p.y);});ctx.closePath();ctx.fillStyle='rgba(4,3,1,.4)';ctx.fill();ctx.strokeStyle=GC+'0.25)';ctx.lineWidth=.5;ctx.stroke();}var ds=sc*.14*(0.8+Math.sin(t*1.8)*.2);gw(ctx,GC+'1)',28);ctx.strokeStyle=GC+'0.7)';ctx.lineWidth=1.8;ctx.beginPath();ctx.moveTo(cx,cy-ds);ctx.lineTo(cx+ds,cy);ctx.lineTo(cx,cy+ds);ctx.lineTo(cx-ds,cy);ctx.closePath();ctx.stroke();ng(ctx);[[cx-W*.35,cy],[cx+W*.35,cy]].forEach(function(pos,pi){drawPyramid(ctx,pos[0],pos[1],Math.min(W,H)*.07,-.25,(pi===0?1:-1)*t*.5,.35+Math.sin(t+pi)*.1,GC);});});
+
+/* PLT CANVAS - ORIGINAL */
+makeCanvas3D('plt-cv',function(ctx,W,H,t){var cx=W/2,cy=H*.5,sc=Math.min(W,H)*.12,fov=sc*6;var sphereCols=[PC,LC,TC];var spherePhases=[0,2.094,4.189];var sphereTilts=[.4,-.35,.55];var pos3=spherePhases.map(function(ph,i){var a=ph+t*.35;var v=rX({x:Math.cos(a)*1.5*sc,y:0,z:Math.sin(a)*1.5*sc},sphereTilts[i]);return{v:v,p:proj(v.x,v.y,v.z,cx,cy,fov),col:sphereCols[i]};});for(var ci=0;ci<3;ci++){var pa=pos3[ci].v,pb=pos3[(ci+1)%3].v;var pa2=proj(pa.x,pa.y,pa.z,cx,cy,fov),pb2=proj(pb.x,pb.y,pb.z,cx,cy,fov);ctx.strokeStyle=GC+'0.1)';ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(pa2.x,pa2.y);ctx.lineTo(pb2.x,pb2.y);ctx.stroke();}gw(ctx,GC+'0.5)',12);ctx.font='bold '+(sc*.5)+'px Cinzel,serif';ctx.fillStyle=GC+'0.4)';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('PLT',cx,cy);ng(ctx);['P','L','T'].forEach(function(lbl,i){var pd=pos3[i];var depth=Math.max(.4,pd.p.s);var gr=sc*.28*depth;gw(ctx,(pd.col)+'0.9)',depth*20);ctx.beginPath();ctx.arc(pd.p.x,pd.p.y,gr,0,Math.PI*2);ctx.strokeStyle=(pd.col)+(depth*.7)+')';ctx.lineWidth=1.4;ctx.stroke();ng(ctx);ctx.font='bold '+(gr*1.8)+'px Cinzel,serif';ctx.fillStyle=(pd.col)+(depth*.9)+')';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(lbl,pd.p.x,pd.p.y);});spherePhases.forEach(function(ph,i){ctx.save();ctx.strokeStyle=(sphereCols[i])+'0.1)';ctx.lineWidth=.5;ctx.beginPath();var f=true;for(var oi=0;oi<=72;oi++){var a=oi/72*Math.PI*2;var v=rX({x:Math.cos(a)*1.5*sc,y:0,z:Math.sin(a)*1.5*sc},sphereTilts[i]);var p=proj(v.x,v.y,v.z,cx,cy,fov);if(f){ctx.moveTo(p.x,p.y);f=false;}else ctx.lineTo(p.x,p.y);}ctx.stroke();ctx.restore();});});
 </script>
+
 </body>
 </html>
